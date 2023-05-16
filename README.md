@@ -32,4 +32,15 @@ IPS Sensors - A standalone appliance.
 Enable wireless devices to gain access to a wired network or the internet.
 *Mesh Wireless LAN* - Receives a signal and regenerates it for broadccast.
 
-**A wireless LAN controller is configured to manage multiple access points.**
+**A wireless LAN controller is configured to manage multiple access points.** - WLC
+
+### Endpoint and Servers
+Endpoint devices request for services whereas servers provide services
+(Client-server and peer-to-peer architecture)
+
+### Cisco DNA Center
+Cisco's centralized network management and orchestration tool. It uses AI and machine learning to proactively manage and troubleshoot network issues.
+Design, add, configure, monitor, troubleshoot, assurance, policy, provision.
+
+### Explain virtualization fundamentals (server virtualization, containers, and VRFs)
+This technology allows you to create multiple simulated environments or dedicated resources from a single physical hardware system. It's used to optimize resource usage and create flexible and scalable network architectures.
