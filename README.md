@@ -44,3 +44,26 @@ Design, add, configure, monitor, troubleshoot, assurance, policy, provision.
 
 ### Explain virtualization fundamentals (server virtualization, containers, and VRFs)
 This technology allows you to create multiple simulated environments or dedicated resources from a single physical hardware system. It's used to optimize resource usage and create flexible and scalable network architectures.
+<br>
+**Server Virtualization**
+<br>
+Hypervisor = Software that can create, start, stop and monitor virtual machines.
+- Type-1  = Native or Baremetal  - Runs directly on the hardware.
+- Type-2 = Hosted - Runs on the OS.
+
+A virtual switch (vSwitch) is a software-based switch that allows virtual machines (VMs) to communicate with each other and with the physical network. A virtual network interface controller (vNIC) is a software-based network adapter that is used to connect a VM to a vSwitch.
+
+Virtual switches are created on the hypervisor host, which is the physical machine that runs the VMs. Virtual switches can be configured to support different types of networks, such as bridged networks, isolated networks, and private networks.
+
+Bridged networks allow VMs to communicate with each other and with the physical network as if they were connected to the same physical switch. Isolated networks allow VMs to communicate with each other, but they are isolated from the physical network. Private networks allow VMs to communicate with each other and with the hypervisor host, but they are isolated from the physical network and from other VMs.
+
+<br>
+**Container**
+<br>
+Containers are a way of isolating and managing applications. They are similar to virtual machines, but they share the same operating system kernel. This makes them more lightweight and efficient than virtual machines.
+Containers are often used to deploy microservices, which are small, self-contained applications. Microservices can be easily scaled and deployed, making them ideal for cloud-based applications.
+(Refer to Adrian Cantril Docker Fundamentals)
+<br>
+**VRF***
+
+<br>
