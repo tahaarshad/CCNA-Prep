@@ -1,6 +1,7 @@
 # CCNA-Prep
 
 ## Network Fundamentals
+> Explain the role and function of network components
 
 ### Routers
 Enables interconnection between networks.
@@ -57,13 +58,22 @@ Virtual switches are created on the hypervisor host, which is the physical machi
 
 Bridged networks allow VMs to communicate with each other and with the physical network as if they were connected to the same physical switch. Isolated networks allow VMs to communicate with each other, but they are isolated from the physical network. Private networks allow VMs to communicate with each other and with the hypervisor host, but they are isolated from the physical network and from other VMs.
 
-<br>
 **Container**
-<br>
+
 Containers are a way of isolating and managing applications. They are similar to virtual machines, but they share the same operating system kernel. This makes them more lightweight and efficient than virtual machines.
 Containers are often used to deploy microservices, which are small, self-contained applications. Microservices can be easily scaled and deployed, making them ideal for cloud-based applications.
 (Refer to Adrian Cantril Docker Fundamentals)
-<br>
-**VRF***
+
+**VRF**
 
 <br>
+
+> Describe characteristics of network topology architectures
+
+**Two-tier**
+
+**Three-tier**
+**Spine-leaf**
+**WAN**
+**Small office/home office (SOHO)**
+**On-premise and cloud**
