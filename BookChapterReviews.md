@@ -33,7 +33,11 @@ transmit the frame
 - Layer names and numbers
 > Terminology related to encapsulation
 - OSI Model Data Encapsulation Terms are related to the layer number + Protocol Data Unit. So L7PDU, L6PDU and so on.
-> Key Terms: adjacent-layer interaction, de-encapsulation, encapsulation, frame, networking model, packet, protocol data unit (PDU), same-layer interaction, segment
+> Key Terms: adjacent-layer interaction, de-encapsulation, encapsulation, frame, networking model, packet, protocol data unit (PDU), same-layer interaction, segment>
+
+<br>
+<br>
+<br>
 
 ## Chapter 2
 **Term**: Distribution Switch (SWD). <br>
@@ -118,3 +122,7 @@ words, it cannot send and receive at the same time.<br>
 the same time
 > Examples of which interfaces use full duplex and which interfaces use half duplex
 - Only when connecting to lan hub, use half-duplex
+
+
+## Chapter 3
+
