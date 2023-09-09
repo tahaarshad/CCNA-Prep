@@ -126,3 +126,102 @@ the same time
 
 ## Chapter 3
 
+> Ethernet over MPLS—physical connections
+
+
+This book refers to this particular Ethernet WAN service with a couple of the common names:
+<br>
+Ethernet over MPLS (EoMPLS): A term that refers to Multiprotocol Label Switching 
+(MPLS), a technology that can be used to create the Ethernet service for the customer. 
+
+>Four-step process of how routers route (forward) packets
+
+Step 1. Use the data-link Frame Check Sequence (FCS) field to ensure that the frame had no errors; if errors occurred, discard the frame.
+<br>
+
+Step 2. Assuming that the frame was not discarded at Step 1, discard the old data-link  header and trailer, leaving the IP packet.
+<br>
+
+Step 3. Compare the IP packet’s destination IP address to the routing table, and find the 
+route that best matches the destination address. This route identifies the outgoing interface of the router and possibly the next-hop router IP address.
+<br>
+
+Step 4. Encapsulate the IP packet inside a new data-link header and trailer, appropriate 
+for the outgoing interface, and forward the frame
+
+>IP Routing and Encapsulation
+
+PC1 sends the packet to its default router
+
+R1 processes the incoming frame and forwards the packet to R2.
+
+R2 processes the incoming frame and forwards the packet to R3
+
+R3 processes the incoming frame and forwards the packet to PC2
+
+>Two statements about how IP expects IP addresses to be grouped into networks or subnets
+
+■ Two IP addresses, not separated from each other by a router, must be in the same group 
+(subnet). 
+
+■ Two IP addresses, separated from each other by at least one router, must be in different 
+groups (subnets).
+
+>Three-step process of how routing protocols learn routes
+
+Step 1. Each router, independent of the routing protocol, adds a route to its routing 
+table for each subnet directly connected to the router.
+
+Step 2. Each router’s routing protocol tells its neighbors about the routes in its routing 
+table, including the directly connected routes and routes learned from other 
+routers.
+
+Step 3. After learning a new route from a neighbor, the router’s routing protocol adds 
+a route to its IP routing table, with the next-hop router of that route typically 
+being the neighbor from which the route was learned.
+
+>IP Routing Protocol Basic Process
+
+Step A. Subnet 150.150.4.0 exists as a subnet at the bottom of the figure, connected to 
+Router R3.
+
+Step B. R3 adds a connected route for 150.150.4.0 to its IP routing table; this happens 
+without help from the routing protocol.
+
+Step C. R3 sends a routing protocol message, called a routing update, to R2, causing 
+R2 to learn about subnet 150.150.4.0.
+
+Step D. R2 adds a route for subnet 150.150.4.0 to its routing table.
+
+Step E. R2 sends a similar routing update to R1, causing R1 to learn about subnet 
+150.150.4.0.
+
+Step F. R1 adds a route for subnet 150.150.4.0 to its routing table. The route lists R1’s 
+own Serial0 as the outgoing interface and R2 as the next-hop router IP address 
+(150.150.2.7)
+
+>Example that shows the purpose and process of DNS name resolution
+
+In this case, PC11, on the left, needs to connect to a server 
+named Server1. At some point, the user either types in the name Server1 or some application on PC11 refers to that server by name. At Step 1, PC11 sends a DNS message—a 
+DNS query—to the DNS server. At Step 2, the DNS server sends back a DNS reply that 
+lists Server1’s IP address. At Step 3, PC11 can now send an IP packet to destination address 
+10.1.2.3, the address used by Server1.
+
+>Example of the purpose and process of ARP
+
+The figure shows the ARP Request sent by router R3, on the left of 
+the figure, as a LAN broadcast. All devices on the LAN will then process the received frame. 
+On the right, at Step 2, host PC2 sends back an ARP Reply, identifying PC2’s MAC address. 
+The text beside each message shows the contents inside the ARP message itself, which lets 
+PC2 learn R3’s IP address and matching MAC address, and R3 learn PC2’s IP address and 
+matching MAC address.
+
+>Ping and ICMP
+
+Ping (Packet Internet Groper) uses the Internet Control Message Protocol (ICMP), sending 
+a message called an ICMP echo request to another IP address. The computer with that IP 
+address should reply with an ICMP echo reply. If that works, you successfully have tested 
+the IP network. In other words, you know that the network can deliver a packet from one 
+host to the other and back. ICMP does not rely on any application, so it really just tests 
+basic IP connectivity—Layers 1, 2, and 3 of the OSI model. 
