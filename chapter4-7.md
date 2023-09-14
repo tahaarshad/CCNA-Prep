@@ -98,9 +98,6 @@ config to enable: end or Crtl+Z
 
 
 
-
-
-
 >Configuration mode context-setting commands
 
 Context-setting commands move you from one configuration subcommand mode, or context, to another. These context-setting commands tell the switch the 
@@ -143,29 +140,28 @@ commands in configuration mode.
 
 `>show mac address-table dynamic`
 
-copy running-config startup-config
+`>copy running-config startup-config`
 
-write erase
-erase startup-config
-erase nvram:
+<br>
 
+`Switch# configure terminal`
 
-hostname name
+`Switch(config)# hostname Fred`
 
-passsword pass
+`Fred(config)# line console 0`
 
+`Fred(config-line)# password hope`
 
+`Fred(config-line)# interface FastEthernet 0/1`
 
-Switch# configure terminal
-Switch(config)# hostname Fred
-Fred(config)# line console 0
-Fred(config-line)# password hope
-Fred(config-line)# interface FastEthernet 0/1
-Fred(config-if)# speed 100
-Fred(config-if)# exit
-Fred(config)#
+`Fred(config-if)# speed 100`
+
+`Fred(config-if)# exit`
+
+`Fred(config)#`
 
 
+### Reference Table from Page 103-104
 no debug all
 undebug all
 reload
@@ -182,3 +178,144 @@ show startup-config
 enable
 disable
 configure terminal
+
+
+## Chapter 5
+
+>Three main functions of a LAN switch
+
+LAN switches receive Ethernet frames and then make a switching decision: either forward 
+the frame out some other ports or ignore the frame. To accomplish this primary mission, 
+switches perform three actions:
+1. Deciding when to forward a frame or when to filter (not forward) a frame, based on 
+the destination MAC address
+2. Preparing to forward frames by learning MAC addresses by examining the source 
+MAC address of each frame received by the switch
+3. Preparing to forward only one copy of the frame to the destination by creating a 
+(Layer 2) loop-free environment with other switches by using Spanning Tree Protocol 
+(STP)
+The first action is the switch’s primary job, whereas the other two items are overhead 
+functions.
+
+>Process to forward a known unicast frame
+
+Switches compare the frame’s destination MAC address to 
+this table to decide whether the switch should forward a frame or simply ignore it
+
+A switch’s MAC address table is also called the switching table, or bridging table, 
+or even the Content-Addressable Memory (CAM) table, in reference to the type of physical memory used to store the table.
+
+
+>Process to forward a known unicast, second switch
+
+A switch’s MAC address table lists the location of each MAC relative to that one switch. In 
+LANs with multiple switches, each switch makes an independent forwarding decision based 
+on its own MAC address table. Together, they forward the frame so that it eventually arrives 
+at the destination.
+
+> Unknown Unicast and Boradcast
+Now again turn your attention to the forwarding process, using the topology in Figure 5-5. 
+What do you suppose the switch does with Fred’s first frame, the one that occurred when 
+there were no entries in the MAC address table? As it turns out, when there is no matching 
+entry in the table, switches forward the frame out all interfaces (except the incoming interface) using a process called flooding. And the frame whose destination address is unknown 
+to the switch is called an unknown unicast frame, or simply an unknown unicast
+
+
+>Process to learn MAC addresses
+
+Switches build the address table by listening to incoming frames and examining the source 
+MAC address in the frame. If a frame enters the switch and the source MAC address is not 
+in the MAC address table, the switch creates an entry in the table. That table entry lists the 
+interface from which the frame arrived. Switch learning logic is that simple.
+
+
+>Summary of switch forwarding logic
+
+Step 1. Switches forward frames based on the destination MAC address:
+
+A. If the destination MAC address is a broadcast, multicast, or unknown destination unicast (a unicast not listed in the MAC table), the switch floods the 
+frame.
+
+B. If the destination MAC address is a known unicast address (a unicast 
+address found in the MAC table):
+
+i. If the outgoing interface listed in the MAC address table is different 
+from the interface in which the frame was received, the switch forwards 
+the frame out the outgoing interface.
+
+ii. If the outgoing interface is the same as the interface in which the frame 
+was received, the switch filters the frame, meaning that the switch simply ignores the frame and does not forward it.
+
+Step 2. Switches use the following logic to learn MAC address table entries:
+
+A. For each received frame, examine the source MAC address and note the 
+interface from which the frame was received.
+
+B. If it is not already in the table, add the MAC address and interface it was 
+learned on.
+
+Step 3. Switches use STP to prevent loops by causing some interfaces to block, meaning that they do not send or receive frames.
+
+>The show mac address-table dynamic command
+
+To see a switch’s MAC address table, use the show mac address-table command. With 
+no additional parameters, this command lists all known MAC addresses in the MAC 
+table, including some overhead static MAC addresses that you can ignore. To see all the 
+dynamically learned MAC addresses only, instead use the show mac address-table dynamic
+command
+
+### Switch Interfaces
+
+The first example assumes that you installed the switch and cabling correctly, and that the 
+switch interfaces work. Once you do the installation and connect to the Console, you can 
+easily check the status of those interfaces with the show interfaces status command
+
+You can see the status for a single interface in a couple of ways. For instance, for 
+F0/1, the command show interfaces f0/1 status lists the status in a single line of output as 
+in Example 5-2. The show interfaces f0/1 command (without the status keyword) displays a 
+detailed set of messages about the interface
+
+The show interfaces command has a large number of options. One particular option, the 
+counters option, lists statistics about incoming and outgoing frames on the interfaces. In 
+particular, it lists the number of unicast, multicast, and broadcast frames (both the in and out 
+directions), and a total byte count for those frames. Example 5-3 shows an example, again 
+for interface F0/1
+
+First, if you know the MAC address, you 
+can search for it—just type in the MAC address at the end of the command, as shown in 
+Example 5-4. All you have to do is include the address keyword, followed by the actual 
+MAC address. If the address exists, the output lists the address. Note that the output lists 
+the exact same information in the exact same format, but it lists only the line for the matching MAC address.
+
+`SW1# show mac address-table dynamic address 0200.1111.1111`
+
+or interface command
+
+`SW1# show mac address-table dynamic interface fastEthernet 0/1`
+
+or vlan
+
+`SW1# show mac address-table dynamic vlan 1`
+
+
+Switches do learn MAC addresses, but those MAC addresses do not remain in the 
+table indefinitely. The switch will remove the entries due to age, due to the table filling, and 
+you can remove entries using a command.
+
+First, for aging out MAC table entries, switches remove entries that have not been used for a 
+defined number of seconds (default of 300 seconds on many switches).
+
+The aging time can be configured to a different time, globally and per-VLAN using the mac address-table aging-time
+time-in-seconds [vlan vlan-number] global configuration command. The example shows a 
+case with all defaults, with the global setting of 300 seconds, and no per-VLAN overrides.
+
+The command also allows parameters to limit the types of entries cleared, 
+as follows:
+■ By VLAN: clear mac address-table dynamic vlan vlan-number
+
+■ By Interface: clear mac address-table dynamic interface interface-id
+
+■ By MAC address: clear mac address-table dynamic address mac-address
+
+
+page 125 for commands reference
