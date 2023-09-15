@@ -319,3 +319,9 @@ as follows:
 
 
 page 125 for commands reference
+
+## Chapter 6
+
+> Example of configuring password login security (no usernames)
+
+> SSH configuration commands with related username login security
