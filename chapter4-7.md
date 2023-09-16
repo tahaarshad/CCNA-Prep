@@ -322,6 +322,116 @@ page 125 for commands reference
 
 ## Chapter 6
 
-> Example of configuring password login security (no usernames)
+> Example of configuring password login security with and without usernames
+
+password password-value: Defines the actual password used on the console or vty
+
+login: Tells IOS to enable the use of a simple shared password (with no username) on this 
+line (console or vty), so that the switch asks the user for a password
+
+line console 0
+ login
+ password faith
+
+ line vty 0 15
+ login
+ password hope
+
+ enable secret love
+
+
+ One method, referred to as 
+local usernames and passwords, configures the username/password pairs locally—that is, 
+in the switch’s configuration. Switches support this local username/password option for the 
+console, for Telnet, and even for SSH, but do not replace the enable password used to reach 
+enable mode.
+
+username wendell secret odom
+username chris secret youdda
+
+line console 0
+ login local
+
+line vty 0 15
+ login local
+
+However, using a username/password configured directly on the switch causes some administrative headaches. For instance, every switch and router needs the configuration for all 
+users who might need to log in to the devices. Then, when any changes need to happen, like 
+an occasional change to the passwords for good security practices, the configuration of all 
+devices must be changed.
+A better option would be to use tools like those used for many other IT login functions. 
+
+Those tools allow for a central place to securely store all username/password pairs, with 
+tools to make users change their passwords regularly, tools to revoke users when they leave 
+their current jobs, and so on.
+
+Cisco switches allow exactly that option using an external server called an authentication, 
+authorization, and accounting (AAA) server. These servers hold the usernames/passwords. 
+
+Typically, these servers allow users to do self-service and forced maintenance to their passwords. Many production networks use AAA servers for their switches and routers today
 
 > SSH configuration commands with related username login security
+
+Step 1. Configure the switch to generate a matched public and private key pair to use 
+for encryption:
+
+A. If not already configured, use the hostname name in global configuration 
+mode to configure a hostname for this switch.
+
+B. If not already configured, use the ip domain-name name in global configuration mode to configure a domain name for the switch, completing the 
+switch’s FQDN.
+
+C. Use the crypto key generate rsa command in global configuration mode 
+(or the crypto key generate rsa modulus modulus-value command to 
+avoid being prompted for the key modulus) to generate the keys. (Use at 
+least a 768-bit key to support SSH version 2.)
+
+Step 2. (Optional) Use the ip ssh version 2 command in global configuration mode to 
+override the default of supporting both versions 1 and 2, so that only SSHv2 
+connections are allowed.
+
+Step 3. (Optional) If not already configured with the setting you want, configure the 
+vty lines to accept SSH and whether to also allow Telnet:
+
+A. Use the transport input ssh command in vty line configuration mode to 
+allow SSH only.
+
+B. Use the transport input all command (default) or transport input telnet ssh
+command in vty line configuration mode to allow both SSH and Telnet.
+
+Step 4. Use various commands in vty line configuration mode to configure local username login authentication as discussed earlier in this chapter
+
+Two key commands give some information about the status of SSH on the switch. First, the 
+show ip ssh command lists status information about the SSH server itself. The show ssh
+command then lists information about each SSH client currently connected into the switch. 
+Example 6-6 shows samples of each, with user wendell currently connected to the switch.
+
+### Enabling IPv4 for Remote Access
+To allow Telnet or SSH access to the switch, and to allow other IP-based management protocols (for example, Simple Network Management Protocol, or SNMP) to function as intended, 
+the switch needs an IP address, as well as a few other related settings. The IP address has 
+nothing to do with how switches forward Ethernet frames; it simply exists to support overhead management traffic.
+
+### Configuring IPv4 on a Switch
+A switch configures its IPv4 address and mask on this special NIC-like VLAN interface. The 
+following steps list the commands used to configure IPv4 on a switch, assuming that the IP 
+address is configured to be in VLAN 1, with Example 6-7 that follows showing an example 
+configuration.
+Step 1. Use the interface vlan 1 command in global configuration mode to enter interface VLAN 1 configuration mode.
+Step 2. Use the ip address ip-address mask command in interface configuration mode 
+to assign an IP address and mask.
+Step 3. Use the no shutdown command in interface configuration mode to enable the 
+VLAN 1 interface if it is not already enabled.
+Step 4. Add the ip default-gateway ip-address command in global configuration mode 
+to configure the default gateway.
+Step 5. (Optional) Add the ip name-server ip-address1 ip-address2 … command in 
+global configuration mode to configure the switch to use Domain Name System 
+(DNS) to resolve names into their matching IP address.
+
+### Configuring DHCP on Switch
+
+Step 1. Enter VLAN 1 configuration mode using the interface vlan 1 global configuration command, and enable the interface using the no shutdown command as 
+necessary.
+Step 2. Assign an IP address and mask using the ip address dhcp interface 
+subcommand.
+
+### Command Reference 145-148
