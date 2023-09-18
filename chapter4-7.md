@@ -435,3 +435,160 @@ Step 2. Assign an IP address and mask using the ip address dhcp interface
 subcommand.
 
 ### Command Reference 145-148
+
+
+## Chapter 7
+
+> Example of configuring speed, duplex, and description
+
+you can configure the speed and 
+duplex settings with the duplex {auto | full | half} and speed {auto | 10 | 100 | 1000} interface subcommands. Simple enough.
+
+Emma# configure terminal
+
+Enter configuration commands, one per line. End with CNTL/Z.
+
+Emma(config)# interface FastEthernet 0/1
+
+Emma(config-if)# duplex full
+
+Emma(config-if)# speed 100
+
+Emma(config-if)# description Printer on 3rd floor, Preset to 100/full 
+
+Emma(config-if)# exit
+
+
+> Example of disabling an interface using the shutdown command
+
+Cisco uses two interface subcommands to configure the idea of 
+administratively enabling and disabling an interface: the shutdown command (to disable) and 
+the no shutdown command (to enable).
+
+With some IOS configuration commands (but not all), you can revert to the default setting by issuing a no version of the command. What does that mean? Let me give you a few 
+examples:
+■ If you earlier had configured speed 100 on an interface, the no speed command on that 
+same interface reverts to the default speed setting (which happens to be speed auto).
+
+■ Same idea with the duplex command: an earlier configuration of duplex half or duplex 
+full, followed by no duplex on the same interface, reverts the configuration back to the 
+default of duplex auto.
+
+■ If you had configured a description command with some text, to go back to the default 
+state of having no description command at all for that interface, use the no description
+command.
+
+> Key decision rules for autonegotiation on Cisco switches when the other device does not participate
+> > Defaults for IEEE autonegotiation
+
+IEEE autonegotiation defines some rules (defaults) that nodes should use as defaults when 
+autonegotiation fails—that is, when a node tries to use autonegotiation but hears nothing 
+from the device. The rules:
+
+■ Speed: Use your slowest supported speed (often 10 Mbps).
+
+■ Duplex: If your speed = 10 or 100, use half duplex; otherwise, use full duplex.
+Cisco switches can make a better choice than that base IEEE speed default because Cisco 
+switches can actually sense the speed used by other nodes, even without IEEE autonegotiation. As a result, Cisco switches use this slightly different logic to choose the speed when 
+autonegotiation fails:
+
+■ Speed: Sense the speed (without using autonegotiation), but if that fails, use the IEEE 
+default (slowest supported speed, often 10 Mbps).
+
+■ Duplex: Use the IEEE defaults: If speed = 10 or 100, use half duplex; otherwise, use full 
+duplex.
+
+NOTE Ethernet interfaces using speeds faster than 1 Gbps always use full duplex.
+
+For example, in Figure 7-4, imagine that SW2’s Gi0/2 interface was configured with the 
+speed 100 and duplex full commands (these settings are not recommended on a Gigabit capable interface, by the way). On Cisco switches, configuring both the speed and duplex
+commands disables IEEE autonegotiation on that port. If SW1’s Gi0/1 interface tries to use 
+autonegotiation, SW1 would also use a speed of 100 Mbps, but default to use half duplex. 
+Example 7-8 shows the results of this specific case on SW1.
+> Two types of interface state terms and their meaning
+
+### Line and Protocol Status
+
+|Line Status|Protocol Status|Interface Status|Typical Root Cause|
+|-----|----|----|-------|
+administratively down | down | disabled |  The shutdown command is configured on the 
+interface.
+down | down | notconnect | No cable; bad cable; wrong cable pinouts; speed mismatch; neighboring device is (a) powered off, (b) shutdown, or (c) error disabled.
+up | down | notconnect | Not expected on LAN switch physical interfaces.
+down | down | (errdisabled) | err-disabled Port security has disabled the interface.
+up | up | connected | The interface is working.
+
+> Example that shows how to find the speed and duplex settings, as well as whether they were learned through autonegotiation
+
+The `show interfaces status` command lists much of the detail configured as compared to `show interfaces`
+
+(a-full and a-100). Note that the text 
+includes the a- to mean that the listed speed and duplex values were autonegotiated.
+
+
+> Explanations of different error statistics on switch interfaces
+
+The output does not identify the duplex mismatch in any way; in fact, finding a duplex 
+mismatch can be much more difficult than finding a speed mismatch. For instance, if you 
+purposefully set the speed on the link in Figure 7-4 to be 10 Mbps on one switch and 100 
+Mbps on the other, both switches would list the port in a down/down or notconnect state. 
+However, in the case shown in Example 7-8, with a duplex mismatch, if the duplex settings 
+do not match on the ends of an Ethernet segment, the switch interface will still be in a 
+connected (up/up) or connected state. 
+
+Not only does the show command give an appearance that the link has no issues, but the 
+link will likely work poorly, with symptoms of intermittent problems. The reason is that the 
+device using half duplex (SW1 in this case) uses carrier sense multiple access collision detect 
+(CSMA/CD) logic, waiting to send when receiving a frame, believing collisions occur when 
+they physically do not—and actually stopping sending a frame because the switch thinks a 
+collision occurred.
+
+To identify duplex mismatch problems, check the duplex setting on each end of the link to 
+see if the values mismatch. You can also watch for incrementing collision and late collision 
+counters, as explained in the next section.
+
+Whenever the physical transmission has problems, the receiving device might receive a frame 
+whose bits have changed values. These frames do not pass the error detection logic as implemented in the FCS field in the Ethernet trailer, as covered in Chapter 2. The receiving device 
+discards the frame and counts it as some kind of input error. Cisco switches list this error as 
+a CRC error, as highlighted in Example 7-9. (Cyclic redundancy check [CRC] is a term related 
+to how the frame check sequence [FCS] math detects an error.)
+
+The example highlights several of the counters as examples so that you can start to understand which ones point to problems and which ones are just counting normal events that are 
+not problems. The following list shows a short description of each highlighted counter, in the 
+order shown in the example:
+
+Runts: Frames that did not meet the minimum frame size requirement (64 bytes, including 
+the 18-byte destination MAC, source MAC, type, and FCS). Can be caused by collisions.
+
+Giants: Frames that exceed the maximum frame size requirement (1518 bytes, including 
+the 18-byte destination MAC, source MAC, type, and FCS).
+
+Input Errors: A total of many counters, including runts, giants, no buffer, CRC, frame, 
+overrun, and ignored counts.
+
+CRC: Received frames that did not pass the FCS math; can be caused by collisions.
+Frame: Received frames that have an illegal format, for example, ending with a partial 
+byte; can be caused by collisions.
+
+Packets Output: Total number of packets (frames) forwarded out the interface.
+
+Output Errors: Total number of packets (frames) that the switch port tried to transmit, 
+but for which some problem occurred.
+
+Collisions: Counter of all collisions that occur when the interface is transmitting a frame.
+
+Late Collisions: The subset of all collisions that happen after the 64th byte of the frame 
+has been transmitted. (In a properly working Ethernet LAN, collisions should occur within 
+the first 64 bytes; late collisions today often point to a duplex mismatch.)
+
+Collisions occur as a normal part of the half-duplex logic imposed by 
+CSMA/CD, so a switch interface with an increasing collisions counter might not even have a 
+problem. However, one problem, called late collisions, points to the classic duplex mismatch problem.
+
+If a LAN design follows cabling guidelines, all collisions should occur by the end of the 
+64th byte of any frame. When a switch has already sent 64 bytes of a frame, and the switch 
+receives a frame on that same interface, the switch senses a collision. In this case, the collision is a late collision, and the switch increments the late collision counter in addition to the usual CSMA/CD actions to send a jam signal, wait a random time, and try again.
+
+With a duplex mismatch, like the mismatch between SW1 and SW2 in Figure 7-4, the halfduplex interface will likely see the late collisions counter increment. Why? The half-duplex 
+interface sends a frame (SW1), but the full-duplex neighbor (SW2) sends at any time, even 
+after the 64th byte of the frame sent by the half-duplex switch. 
