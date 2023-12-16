@@ -11,6 +11,7 @@ Classless: Classless networks include subnet masks in their routing updates. Cla
 
 Cost of Path depends on Bandwidth: uses formula cost = reference bandwidth/interface bandwidth
 
+
 other: Dijkstra algorithm
 Builds topological map
 Event-driven updates
@@ -38,6 +39,11 @@ Requires additional memory, CPU processing, and more initial bandwidth than othe
 ## 5 steps to building routing table
 
 - Establish adjacencies by sending hello packets
+- - Cause of adjacnecy failure
+- -  subnet mask do not match
+- - hello/dead interval timers do not match
+- - incorrect ospf commands
+- - network types do not match
 - Send LS Advertisements to all nearby router
 - Once every router has sent each other LSA's, then the LSDB is created
 - The algorithm is exevuted
@@ -79,3 +85,28 @@ Type 1 packets elect the DR and BDR. multiaccess connections like ethernet requi
 
 
 ### OSPF Multicast address - 224.0.0.5
+### ROuter ID is 32 bit address similar to IPv4
+
+## Importance of DR
+Challenges:
+- Flooding of LSA's
+- Creation of Multiple Adjacencies
+
+The DR will receive the LSA and flood it to others.
+
+## MultiAccess OSPF
+
+New DR selection occurs if:
+- DR fails
+- OSPF process on the DR fails
+- the interface of the DR fails
+
+
+## Election Process
+- Highest inteface priority
+- highest interface router id
+- - Router ID is manually configured
+- - Router ID is the highest loopback IPv4 address
+- - Router ID is the highest active interface IPv4 address
+
+
