@@ -108,3 +108,20 @@ Defense In-Depth Approach - Multi-layers security infrasturcture utilizing a com
 - IPS
 - Content Security Appliance = Web and Email
 
+## Cryptography
+### Data integrity
+- MD5 128-bit
+- SHA-1 160-bit
+- SHA-2 = 224, 256, 384 and 512 bits
+- SHA-3 = 224, 256, 384 and 512 bits
+
+### Orign Auth
+- HMAC - Keyed Hash Message Authentication Code
+- The hash value and secret key are used to create this code.
+
+### Confidentiality
+Symmetric Key - One Key for all
+- DES, 3DES, AES, SEAL, RC
+
+Assymetric - public and private keys = SSL, SSH
+- DH, DSS, DSA, RSA
