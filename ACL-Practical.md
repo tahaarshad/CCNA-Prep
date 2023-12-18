@@ -70,3 +70,69 @@ Use the show access-lists command to verify the ACL now has a new ACE 15 inserte
 
 Notice that sequence number 15 is displayed prior to sequence number 10. We might expect the order of the statements in the output to reflect the order in which they were entered. However, the IOS puts host statements in an order using a special hashing function. The resulting order optimizes the ACL to search by host entries first, and then by network entries.
 
+## Securing VTY Ports
+R1(config-line)# access-class {access-list-number | access-list-name} { in | out } 
+
+### Example
+R1(config)# username ADMIN secret class
+R1(config)# ip access-list standard ADMIN-HOST
+R1(config-std-nacl)# remark This ACL secures incoming vty lines
+R1(config-std-nacl)# permit 192.168.10.10
+R1(config-std-nacl)# deny any
+R1(config-std-nacl)# exit
+R1(config)# line vty 0 4
+R1(config-line)# login local
+R1(config-line)# transport input telnet
+R1(config-line)# access-class ADMIN-HOST in
+R1(config-line)# end
+R1#
+
+In a production environment, you would set the vty lines to only allow SSH, as shown in the example.
+
+R1(config)# line vty 0 4
+R1(config-line)# login local
+R1(config-line)# transport input ssh
+R1(config-line)# access-class ADMIN-HOST in
+R1(config-line)# end
+R1#
+
+## Extended ACL
+Also have both numbered and named ACL
+
+Router(config)# access-list access-list-number {deny | permit | remark text} protocol source source-wildcard [operator {port}] destination destination-wildcard [operator {port}] [established] [log]
+
+- operator (optional) - compares source or destination ports. lt,gt,eq,neq
+- established (optional) - TCP only. Used in 1st Gen FW
+
+Can use either port name or port number
+
+### Established Keyword
+TCP can also perform basic stateful firewall services using the TCP established keyword. The keyword enables inside traffic to exit the inside private network and permits the returning reply traffic to enter the inside private network
+
+
+R1(config)# access-list 120 permit tcp any 192.168.10.0 0.0.0.255 established
+R1(config)# interface g0/0/0 
+R1(config-if)# ip access-group 120 out 
+R1(config-if)# end
+R1# show access-lists 
+Extended IP access list 110
+     10 permit tcp 192.168.10.0 0.0.0.255 any eq www
+     20 permit tcp 192.168.10.0 0.0.0.255 any eq 443 (657 matches)
+Extended IP access list 120
+     10 permit tcp any 192.168.10.0 0.0.0.255 established (1166 matches)
+R1#
+
+### Named
+Router(config)# ip access-list extended access-list-name 
+
+### Editing
+Same as standard. Remove ACE with the sequence number.
+R1(config)# ip access-list extended SURFING 
+R1(config-ext-nacl)# no 10
+R1(config-ext-nacl)# 10 permit tcp 192.168.10.0 0.0.0.255 any eq www
+
+
+## Verify
+- show access-lists
+- show running-config
+- show ip interface
