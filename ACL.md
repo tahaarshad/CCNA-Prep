@@ -40,3 +40,20 @@ The summarized network 192.168.10.0/23 includes all IP addresses from 192.168.10
 ### Keywords
 host = replace for 0.0.0.0 mask. Match one host
 any = replace for 255.255.255.255. Any Address range
+
+## ACL Creation
+A router interface can have 4 ACL's:
+- inbound ipv4 acl
+- outbound ipv4 acl
+- inbound ipv6 acl
+- outbound ipv6 acl
+
+## Types
+- Standard, Extended
+- Named and Numbered
+
+Numbers: 1-99 and 1300-1999 for standard, and 100-199 and 2000-2699 for Extended
+
+## Placement
+- Standard ACL should be close to the destination
+- Extended ACL should be close to the source
