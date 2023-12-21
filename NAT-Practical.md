@@ -45,3 +45,31 @@ To clear dynamic entries, use clear ip nat transation:
 Show ip nat statistics for displaying information
 Show running config | include nat
 
+## PAT
+
+### Scenerio 1 - Using one public IP Address using overload keyword
+R2(config)# ip nat inside source list 1 interface serial 0/1/1 overload
+R2(config)# access-list 1 permit 192.168.0.0 0.0.255.255
+R2(config)# interface serial0/1/0
+R2(config-if)# ip nat inside
+R2(config-if)# exit
+R2(config)# interface Serial0/1/1
+R2(config-if)# ip nat outside
+
+### Scenerio 2 - Using an address pool using overload keyword
+R2(config)# ip nat pool NAT-POOL2 209.165.200.226 209.165.200.240 netmask 255.255.255.224
+R2(config)# access-list 1 permit 192.168.0.0 0.0.255.255
+R2(config)# ip nat inside source list 1 pool NAT-POOL2 overload
+R2(config)# 
+R2(config)# interface serial0/1/0
+R2(config-if)# ip nat inside
+R2(config-if)# exit
+R2(config)# interface serial0/1/1
+R2(config-if)# ip nat outside
+R2(config-if)# end
+
+### Verify
+show ip nat translations - look for different port numbers
+
+show ip nat statistics - look for "type generic, total addresses 15, allocated 1 (6%), misses 0"
+
