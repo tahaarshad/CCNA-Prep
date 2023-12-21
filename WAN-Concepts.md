@@ -35,3 +35,16 @@ Point-to-Point Protocol (PPP) (less used)
 High-Level Data Link Control (HDLC) (less used)
 Frame Relay (legacy)
 Asynchronous Transfer Mode (ATM) (legacy)
+
+## WAN Terms
+- DTE - Data Terminal Equipment - Link between LAN and WAN
+- DCE - Data Communications Equipment - Communicates with the provider
+- CPE - Customer Premises Equipment - All DTE and DCE are here
+- POP - Point of Presence - The point where subscriber connects to the service provider network
+- Demarcation Point - Physical location that seprate CPE and service provider equipment
+- Local Loop - Line that connects CPE to CO
+- Central Office - Service Provider facility
+- Toll Network - all communication devices inside the WAN provider network
+- Backhaul network - these networks connect multiple access nodes to the service provider network
+- Backbone Network - high capacity network to create redundancy
+
