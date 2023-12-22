@@ -61,9 +61,15 @@ Serial is data that is sent sequentially where parallel are multiple bits of dat
 
 ## Circuit Switched Communication
 This network establishes a dedicated circuit when communicating between endpoints. It uses the same path for the whole communication. Not suited for data communication.
+- PSTN limit the rate of the signal to less than 56 kbps
+- ISDN provides for data rates from 45 Kbps to 2.048 Mbps.
 
 ## Packet Switched COmmunication
 Used in network communication. Data is divided into packets and sent across a shared network without any dedicated line. MPLS is example.
+- Frame Relay: support data rates up to 4 Mbps
+- ATM cells are always a fixed length of 53 bytes
+- Ethernet WAN - Using optical fiber and replacing the upper two technologies.
+- Multiprotocol Label Switching (MPLS) is a high-performance service provider WAN routing technology to interconnect clients without regard to access method or payload.
 
 ## Optical Fiber Standards
 - SDH - Synchronous Digital Hierarchy (SDH) is a global standard for transporting data over fiber-optic cable.
@@ -76,5 +82,36 @@ Used in network communication. Data is divided into packets and sent across a sh
 
 Simplicity, quality availablity but costly and limited flexibility.
 
+## Internet Based Connectivity
+- DSL: A Digital Subscriber Line (DSL) is a high-speed, always-on, connection technology that uses existing twisted-pair telephone lines to provide IP services to users. 
+Point to point protocol over ethernet. Either with host or router having the PPPoE client.
+- Cable Technology: Using coaxial cable.
 
+- Fiber Technology
+  - Fiber to the Home (FTTH) - Fiber reaches the boundary of the residence. Passive optical networks and point-to-point Ethernet are architectures that can deliver cable TV, internet, and phone services over FTTH networks directly from an the service provider central office.
+  - Fiber to the Building (FTTB) - Fiber reaches the boundary of the building, such as the basement in a multi-dwelling unit, with the final connection to the individual living space being made via alternative means, like curb or pole technologies.
+  - Fiber to the Node/Neighborhood (FTTN) – Optical cabling reaches an optical node that converts optical signals to a format acceptable for twisted pair or coaxial cable to the premise.
+  
+- Wireless
+  - Municipal Wi-Fi
+  - Cellular
+  - Satellite Internet
+  - WiMAX
 
+- VPN: site to site or remote access
+
+## ISP Connectivity Option
+- Single Homes
+- DUal Homed - two links to one isp
+- Multi Homed - one link to two isp each
+- Dual Multihomed
+
+## Comparison
+Some factors to consider include the following:
+
+Cable - Bandwidth is shared by many users. Therefore, upstream data rates are often slow during high-usage hours in areas with over-subscription.
+DSL - Limited bandwidth that is distance sensitive (in relation to the ISP central office). Upload rate is proportionally lower compared to download rate.
+Fiber-to-the-Home - This option requires fiber installation directly to the home.
+Cellular/Mobile - With this option, coverage is often an issue, even within a small office or home office where bandwidth is relatively limited.
+Municipal Wi-Fi - Most municipalities do not have a mesh Wi-Fi network deployed. If is available and in range, then it is a viable option.
+Satellite - This option is expensive and provides limited capacity per subscriber. Typically used when no other option is available.
