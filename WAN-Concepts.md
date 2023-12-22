@@ -48,3 +48,33 @@ Asynchronous Transfer Mode (ATM) (legacy)
 - Backhaul network - these networks connect multiple access nodes to the service provider network
 - Backbone Network - high capacity network to create redundancy
 
+## Devices
+- Voiceband Modem
+- DSL Cable Modem
+- CSU/DSU - connects digital device to digital line
+- Optical COnverter
+- WAP/Router
+- WAN COre devices
+
+## Serial and Parallel Communication
+Serial is data that is sent sequentially where parallel are multiple bits of data trasferred at the same time through multiple channels and then syncronised.
+
+## Circuit Switched Communication
+This network establishes a dedicated circuit when communicating between endpoints. It uses the same path for the whole communication. Not suited for data communication.
+
+## Packet Switched COmmunication
+Used in network communication. Data is divided into packets and sent across a shared network without any dedicated line. MPLS is example.
+
+## Optical Fiber Standards
+- SDH - Synchronous Digital Hierarchy (SDH) is a global standard for transporting data over fiber-optic cable.
+- SONET - Synchronous Optical Networking (SONET) is the North American standard that provides the same services as SDH.
+- Dense Wavelength Division Multiplexing (DWDM) is a newer technology that increases the data-carrying capacity of SDH and SONET by simultaneously sending multiple streams of data (multiplexing) using different wavelengths of light. 80 channels, 10Gbps each.
+
+## Leased Serial Lines
+- T-carrier - Used in North America, T-carrier provides T1 links supporting bandwidth up to 1.544 Mbps and T3 links supporting bandwidth up to 43.7 Mbps.
+- E-carrier – Used in Europe, E-carrier provides E1 links supporting bandwidth up to 2.048 Mbps and E3 links supporting bandwidth up to 34.368 Mbps.
+
+Simplicity, quality availablity but costly and limited flexibility.
+
+
+
