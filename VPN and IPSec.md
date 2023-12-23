@@ -32,3 +32,15 @@ So to share routing information such as OSPF over the network securely, first en
 Upper solution are hard to maintain when multiple sites require it. So DMVPN is used.
 IPSec is used and configuration is in hub and spoke manner. Each site is configured with Multipoint GRE. SPokes can create virtual spoke to spoke tunnels.
 
+# IPSec
+Protects and authenticates IP packets between source and destination.
+## FUnctions
+- Protocol: The choices for IPsec Protocol include Authentication Header (AH) or Encapsulation Security Protocol (ESP). AH authenticates the Layer 3 packet. ESP encrypts the Layer 3 packet.
+- Confidentiality: Layer 3 packet. Choices include Data Encryption Standard (DES), Triple DES (3DES), Advanced Encryption Standard (AES), or Software-Optimized Encryption Algorithm (SEAL). No encryption is also an option.
+- Integrity: hash algorithm, such as message-digest 5 (MD5) or Secure Hash Algorithm (SHA).Hashed Message Authentication Code (HMAC)
+- Authentication: IPsec uses Internet Key Exchange (IKE) to authenticate users and devices that can carry out communication independently. IKE uses several types of authentication, including username and password, one-time password, biometrics, pre-shared keys (PSKs), and digital certificates using the Rivest, Shamir, and Adleman (RSA) algorithm.
+- Diffie-Hellman: IPsec uses the DH algorithm to provide a public key exchange method for two peers to establish a shared secret key. There are several different groups to choose from including DH14, 15, 16 and DH 19, 20, 21 and 24. DH1, 2 and 5 are no longer recommended.
+
+When establishing a VPN link, the peers must share the same SA to negotiate key exchange parameters, establish a shared key, authenticate each other, and negotiate the encryption parameters. Notice that SA Example 1 is using no encryption.
+
+AH does not provide Confidentiality
