@@ -115,3 +115,6 @@ Fiber-to-the-Home - This option requires fiber installation directly to the home
 Cellular/Mobile - With this option, coverage is often an issue, even within a small office or home office where bandwidth is relatively limited.
 Municipal Wi-Fi - Most municipalities do not have a mesh Wi-Fi network deployed. If is available and in range, then it is a viable option.
 Satellite - This option is expensive and provides limited capacity per subscriber. Typically used when no other option is available.
+
+Private WAN infrastructure - such as dedicated point-to-point leased lines, PSTN, ISDN, Ethernet WAN, ATM, or Frame Relay
+Public WAN infrastructure - such as digital subscriber line (DSL), cable, satellite access, municipal Wi-Fi, WiMAX, or wireless cellular including 3G/4G

@@ -44,3 +44,8 @@ Protects and authenticates IP packets between source and destination.
 When establishing a VPN link, the peers must share the same SA to negotiate key exchange parameters, establish a shared key, authenticate each other, and negotiate the encryption parameters. Notice that SA Example 1 is using no encryption.
 
 AH does not provide Confidentiality
+
+Remote Access VPN - This VPN is created dynamically when required to establish a secure connection between a client and a VPN server. Remote access VPNs include client-based IPsec VPNs and clientless SSL VPNs.
+Site-to-site VPN - This VPN is created when interconnecting devices are preconfigured with information to establish a secure tunnel. VPN traffic is encrypted only between the interconnecting devices, and internal hosts have no knowledge that a VPN is used. Site-to-site VPNs include IPsec, GRE over IPsec, Cisco Dynamic Multipoint (DMVPN), and IPsec Virtual Tunnel Interface (VTI) VPNs.
+
+Packets in a VPN are encapsulated with the headers from one or more VPN protocols before being sent across the third party network. This is referred to as "tunneling". These outer headers can be used to route the packets, authenticate the source, and prevent unauthorized users from reading the contents of the packets.
