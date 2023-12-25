@@ -68,3 +68,40 @@ developed in 1994 to meet the needs of real-time applications, such as remote vi
 - Drawbacks
     - No absolute guarantee of service quality, Requires a set of complex mechanisms to work in concert throughout the network
   
+## QoS Implementation
+### Classification and Marking
+Classify packets and then mark them by adding a vlaue to the packet header according to the policies. Marking is done close to source.
+
+Ethernet (802.1Q, 802.1p) --- 2	--- Class of Service (CoS) --- 	3
+802.11 (Wi-Fi)--- 	2	--- Wi-Fi Traffic Identifier (TID)	--- 3
+MPLS--- 	2	--- Experimental (EXP)--- 	3
+IPv4 and IPv6	--- 3	--- IP Precedence (IPP)	--- 3
+IPv4 and IPv6	--- 3	--- Differentiated Services Code Point (DSCP)	--- 6
+
+- Marking at layer 2
+    - 802.1q,Class of Service: The 802.1Q standard also includes the QoS prioritization scheme known as IEEE 802.1p. The 802.1p standard uses the first three bits in the Tag Control Information (TCI) field. Known as the Priority (PRI) field, this 3-bit field identifies the Class of Service (CoS) markings. Three bits means that a Layer 2 Ethernet frame can be marked with one of eight levels of priority (values 0-7)
+- MArking at Layer 3
+    - 8-bit field for marking: the Type of Service (ToS) field for IPv4 and the Traffic Class field for IPv6.
+    - DSCP: The 64 DSCP values are organized into three categories:
+
+Best-Effort (BE) - This is the default for all IP packets. The DSCP value is 0. The per-hop behavior is normal routing. When a router experiences congestion, these packets will be dropped. No QoS plan is implemented.
+Expedited Forwarding (EF) - RFC 3246 defines EF as the DSCP decimal value 46 (binary 101110). The first 3 bits (101) map directly to the Layer 2 CoS value 5 used for voice traffic. At Layer 3, Cisco recommends that EF only be used to mark voice packets.
+Assured Forwarding (AF) - RFC 2597 defines AF to use the 5 most significant DSCP bits to indicate queues and drop preference. 
+
+## Trust Boundaries
+Where should markings occur? Traffic should be classified and marked as close to its source as technically and administratively feasible. This defines the trust boundary.
+
+Trusted endpoints have the capabilities and intelligence to mark application traffic to the appropriate Layer 2 CoS and/or Layer 3 DSCP values. Examples of trusted endpoints include IP phones, wireless access points, videoconferencing gateways and systems, IP conferencing stations, and more.
+Secure endpoints can have traffic marked at the Layer 2 switch.
+Traffic can also be marked at Layer 3 switches / routers.
+Re-marking traffic, for example, re-marking CoS values to IP Precedent or DSCP values, is typically necessary.
+
+## Shaping and Policing
+Traffic shaping retains excess packets in a queue and then schedules the excess for later transmission over increments of time. The result of traffic shaping is a smoothed packet output rate.
+
+## WRED
+Some congestion avoidance techniques provide preferential treatment for which packets will get dropped. For example, Cisco IOS QoS includes weighted random early detection (WRED) as a possible congestion avoidance solution. The WRED algorithm allows for congestion avoidance on network interfaces by providing buffer management and allowing TCP traffic to decrease, or throttle back, before buffers are exhausted. Using WRED helps avoid tail drops and maximizes network use and TCP-based application performance. There is no congestion avoidance for User Datagram Protocol (UDP)-based traffic, such as voice traffic. In case of UDP-based traffic, methods such as queuing and compression techniques help to reduce and even prevent UDP packet loss.
+
+
+What happens when an edge router using IntServ QoS determines that the data pathway cannot support the level of QoS requested?
+Data is not forwarded
