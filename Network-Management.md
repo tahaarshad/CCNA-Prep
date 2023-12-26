@@ -80,7 +80,40 @@ Clock is synchronized, stratum 2, reference is 209.165.200.225
 S1(config)# end
 
 ## Simple Network Management Protocol
+SNMP is an application layer protocol that provides a message format for communication between managers and agents. The SNMP system consists of three elements:
 
+SNMP manager
+SNMP agents (managed node)
+Management Information Base (MIB)
+
+The SNMP manager can collect information from an SNMP agent by using the “get” action and can change configurations on an agent by using the “set” action. In addition, SNMP agents can forward information directly to a network manager by using “traps”.
+
+### SNMP Operations
+- get-request:Retrieves a value from a specific variable.
+
+- get-next-request: Retrieves a value from a variable within a table; the SNMP manager does not need to know the exact variable name. A sequential search is performed to find the needed variable from within a table.
+
+- get-bulk-request: Retrieves large blocks of data, such as multiple rows in a table, that would otherwise require the transmission of many small blocks of data. (Only works with SNMPv2 or later.)
+
+- get-response: Replies to a get-request, get-next-request, and set-request sent by an NMS.
+
+- set-request: Stores a value in a specific variable.
+
+The SNMP agent responds to SNMP manager requests as follows:
+
+Get an MIB variable - The SNMP agent performs this function in response to a GetRequest-PDU from the network manager. The agent retrieves the value of the requested MIB variable and responds to the network manager with that value.
+Set an MIB variable - The SNMP agent performs this function in response to a SetRequest-PDU from the network manager. The SNMP agent changes the value of the MIB variable to the value specified by the network manager. An SNMP agent reply to a set request includes the new settings in the device.
+
+### SNMP Agent Traps
+To mitigate these disadvantages, it is possible for SNMP agents to generate and send traps to inform the NMS immediately of certain events. Traps are unsolicited messages alerting the SNMP manager to a condition or event on the network. Examples of trap conditions include, but are not limited to, improper user authentication, restarts, link status (up or down), MAC address tracking, closing of a TCP connection, loss of connection to a neighbor, or other significant events. Trap-directed notifications reduce network and agent resources by eliminating the need for some of SNMP polling requests.
+
+### SNMP Version
+SNMPv1 - This is the Simple Network Management Protocol, a Full Internet Standard, that is defined in RFC 1157.
+SNMPv2c - This is defined in RFCs 1901 to 1908. It uses a community-string-based Administrative Framework.
+SNMPv3 - This is an interoperable standards-based protocol originally defined in RFCs 2273 to 2275. It provides secure access to devices by authenticating and encrypting packets over the network. It includes these security features: message integrity to ensure that a packet was not tampered with in transit, authentication to determine that the message is from a valid source, and encryption to prevent the contents of a message from being read by an unauthorized source.
+
+
+SNMPv1 is the original version of the protocol and provides the most basic functionality required for data polling without using significant resources. However, SNMPv1 has very basic security and doesn’t include any encryption algorithms. SNMPv2c is nearly identical to SNMPv1, except for different version number in the encoding, new data type(s), and Get-Bulk requests that are not supported by SNMPv1. SNMPv3 is the most recent version and offers advanced security features, including authentication and encryption, to protect SNMP communication
 ## Syslog
 Accessing System Messages. Syslog uses UDP port 514 to send event notification messages across IP networks to event message collectors.
 
@@ -124,3 +157,6 @@ For example, sample output on a Cisco switch for an EtherChannel link changing s
 use the command service timestamps log datetime to force logged events to display the date and time. As shown in the command output, when the R1 GigabitEthernet 0/0/0 interface is reactivated, the log messages now contain the date and time.
 
 R1(config)# service timestamps log datetime
+
+
+
