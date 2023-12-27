@@ -235,3 +235,30 @@ R1# copy running-config startup-config
 R1(config)# config-register 0x2102
 R1(config)# end
 R1# copy running-config startup-config
+
+### Managing IOS Cisco Image
+- ping tftp
+    - R1# ping 172.16.1.100
+- verify image size
+    - R1# show flash0: 
+- copy image to tftp
+    - R1# copy flash: tftp: 
+Source filename []? isr4200-universalk9_ias.16.09.04.SPA.bin
+Address or name of remote host []? 172.16.1.100
+Destination filename [isr4200-universalk9_ias.16.09.04.SPA.bin]? 
+
+- or copy ios to flash
+    - R1# copy tftp: flash: 
+Address or name of remote host []?2001:DB8:CAFE:100::99
+Source filename []?  isr4200-universalk9_ias.16.09.04.SPA.bin
+Destination filename [isr4200-universalk9_ias.16.09.04.SPA.bin]? 
+
+- selec file as boot file
+    - R1# configure terminal
+R1(config)# boot system flash0:isr4200-universalk9_ias.16.09.04.SPA.bin
+R1(config)# exit
+R1#
+R1# copy running-config startup-config
+R1#
+R1# reload
+Proceed with reload? [confirm] 
