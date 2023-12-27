@@ -160,3 +160,49 @@ R1(config)# service timestamps log datetime
 
 
 
+## File Maintenance
+
+### ROuter
+The Cisco IOS File System (IFS) allows the administrator to navigate to different directories and list the files in a directory.
+
+- show file systems
+    - This command provides useful information such as the amount of total and free memory, the type of file system, and its permissions. Permissions include read only (ro), write only (wo), and read and write (rw). The permissions are shown in the Flags column of the command output.
+
+- dir 
+    - command for current directory items
+
+- cd nvram
+    - pwd to view current directory and then dir to view its contents
+
+### Switch
+- show file systems
+
+### Backup COnfiguration
+Configuration files can be saved to a text file by using Tera Term
+- Step 1. On the File menu, click Log.
+- Step 2. Choose the folder location and filename to save the file and click Save. Tera Term will open Tera Term: Log window and will now capture all commands and output generated in the terminal window.
+- Step 3. To capture the current configuration, enter the show running-config or show startup-config command privileged EXEC command. The text displayed in the terminal window will also be directed to the chosen file.
+- Step 4. When the capture is complete, select Close in the Tera Term: Log window.
+- Step 5. Open the file to verify that the configuration was captured properly and not corrupt.
+
+### Restore COnfiguration
+A configuration can be copied from a file and then directly pasted to a device. The IOS executes each line of the configuration text as a command. This means that the file will require editing to ensure that encrypted passwords are in plaintext, and that non-command text such as --More-- and IOS messages are removed. In addition, you may want to add enable and configure terminal to the beginning of the file or enter global configuration mode before pasting the configuration. This process is discussed in the lab later is this topic.
+
+Instead of copying and pasting, a configuration can be restored from a text file by using Tera Term
+
+- Step 1. On the File menu, click Send file.
+- Step 2. Locate the file to be copied into the device and click Open.
+- Step 3. Tera Term will paste the file into the device.
+
+### TFTP to backup and restore
+- R1# copy running-config tftp
+Remote host []?192.168.10.254
+Name of the configuration file to write[R1-config]? R1-Jan-2019
+Write file R1-Jan-2019 to 192.168.10.254? [confirm]
+Writing R1-Jan-2019 !!!!!! [OK]
+
+### usb
+- verify usb is there: show file systems
+- R1# copy running-config usbflash0: 
+- check contents: R1# dir usbflash0:/ 
+- restore: copy usbflash0:/R1-Config running-config
