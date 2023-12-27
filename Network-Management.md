@@ -206,3 +206,32 @@ Writing R1-Jan-2019 !!!!!! [OK]
 - R1# copy running-config usbflash0: 
 - check contents: R1# dir usbflash0:/ 
 - restore: copy usbflash0:/R1-Config running-config
+
+## Password Recovery
+- Step 1. Enter the ROMMON mode.
+
+With console access, a user can access the ROMMON mode by using a break sequence during the boot up process or removing the external flash memory when the device is powered off. When successful, the rommon 1 > prompt displays, as shown in the example.
+
+Note: The break sequence for PuTTY is Ctrl+Break. A list of standard break key sequences for other terminal emulators and operating systems can be found by searching the internet.
+
+- Step 2. Change the configuration register.
+
+The ROMMON software supports some basic commands, such as confreg. The confreg 0x2142 command allows the user to set the configuration register to 0x2142. With the configuration register at 0x2142, the device will ignore the startup config file during startup. The startup config file is where the forgotten passwords are stored. After setting the configuration register to 0x2142, type reset at the prompt to restart the device. 
+
+- Step 3. Copy the startup-config to the running-config.
+
+After the device has finished reloading, copy the startup config to the running config by using the copy startup-config running-config command, as displayed in the example.
+
+- Step 4. Change the password.
+- Step 5. Save the running-config as the new startup-config.
+
+R1(config)# config-register 0x2102
+R1(config)# end
+R1# copy running-config startup-config
+
+
+- Step 6. Reload the device.
+
+R1(config)# config-register 0x2102
+R1(config)# end
+R1# copy running-config startup-config
