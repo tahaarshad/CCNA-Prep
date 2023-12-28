@@ -46,3 +46,41 @@ Scalability is the term for a network that can grow without losing availability 
 - Wireless Connectivity
     - Expand the Access Layer
 
+## Switch Hardware
+Platforms
+- Campus LAN Switches = Cisco 2960, 3560, 3650, 3850, 4500, 6500, and 6800 Series
+- Cloud-Managed Switches = The Cisco Meraki 
+- Data Center Switches = Cisco Nexus Series switches
+- Service Provider Switches = aggregation switches and Ethernet access switches
+- Virtual Networking = Cisco Nexus virtual networking switch
+
+Form Factors
+- Fixed configuration switches
+
+- Modular configuration switches
+
+- Stackable configuration switches
+
+- Thickness
+
+Port Density
+The port density of a switch refers to the number of ports available on a single switch. The figure shows the port density of three different switches.
+
+Forwarding Rates
+Forwarding rates define the processing capabilities of a switch by rating how much data the switch can process per second.
+
+Power over Ethernet
+Power over Ethernet (PoE) allows the switch to deliver power to a device over the existing Ethernet cabling. 
+
+Multilayer Switching
+Multilayer switches are typically deployed in the core and distribution layers of an organization's switched network. Multilayer switches are characterized by their ability to build a routing table, support a few routing protocols, and forward IP packets at a rate close to that of Layer 2 forwarding.
+
+## Router Hardware
+Routers
+- Branch Routers = Cisco Integrated Services Router (ISR) 4000 Series Routers
+
+- Network Edge Routers = Cisco Aggregation Services Routers (ASR) 9000 Series Routers
+
+- Service Provider Routers = Cisco Network Convergence System (NCS) 6000 Series Routers
+
+- Industrial = Cisco 1100 Series Industrial Integrated Services Routers
