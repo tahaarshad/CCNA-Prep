@@ -117,3 +117,63 @@ Doctnnent Solution
 - Substitution
 - Comparison
 - Educated Guess
+
+## Troubleshooting Tools
+***Software:***
+Network Management System Tools
+
+Knowledge Bases
+
+Baselining Tools
+
+***Protocol Analyzers:***
+Wireshark
+
+***Hardware:***
+Digital Multimeters: measure electrical values of voltage, current, and resistance.
+
+Cable Testers: detect broken wires, crossed-over wiring, shorted connections, and improperly paired connections. These devices can be inexpensive continuity testers, moderately priced data cabling testers, or expensive time-domain reflectometers (TDRs)
+
+Cable Analyzers: test and certify copper and fiber cables for different services and standards.
+
+Portable Network Analyzers: troubleshooting switched networks and VLANs.
+
+Cisco Prime NAM: includes hardware and software for performance analysis in switching and routing environments.
+
+***Syslog Server***
+In the command output, system messages from level 0 (emergencies) to 5 (notifications) are sent to the syslog server at 209.165.200.225.
+
+R1(config)# logging host 209.165.200.225 
+R1(config)# logging trap notifications 
+R1(config)# logging on
+R1(config)#
+
+## Symptoms and Causes of Network Problems
+
+### Physical Layer
+
+
+| Symptom                    | Description                        |
+|----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Performance lower than baseline | Requires previous baselines for comparison. The most common reasons for slow or poor performance include overloaded or underpowered servers, unsuitable switch or router configurations, traffic congestion on a low-capacity link, and chronic frame loss.                                                                                                                                                                                                 |
+| Loss of connectivity       | Loss of connectivity could be due to a failed or disconnected cable. Can be verified using a simple ping test. Intermittent connectivity loss can indicate a loose or oxidized connection.                                                                                                                                                                                                                                              |
+| Network bottlenecks or congestion | If a router, interface, or cable fails, routing protocols may redirect traffic to other routes that are not designed to carry the extra capacity. This can result in congestion or bottlenecks in parts of the network.                                                                                                                                                                                                                   |
+| High CPU utilization rates | High CPU utilization rates are a symptom that a device, such as a router, switch, or server, is operating at or exceeding its design limits. If not addressed quickly, CPU overloading can cause a device to shut down or fail.                                                                                                                                                                                                            |
+| Console error messages     | Error messages reported on the device console could indicate a physical layer problem. Console messages should be logged to a central syslog server.                                                                            |
+
+
+| Problem Cause             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|---------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Power-related             | This is the most fundamental reason for network failure. Check the operation of the fans and ensure that the chassis intake and exhaust vents are clear. If other nearby units have also powered down, suspect a power failure at the main power supply.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Hardware faults           | Faulty network interface cards (NICs) can be the cause of network transmission errors due to late collisions, short frames, and jabber. Jabber is often defined as the condition in which a network device continually transmits random, meaningless data onto the network. Other likely causes of jabber are faulty or corrupt NIC driver files, bad cabling, or grounding problems.                                                                                                                                                                                                                                                                                                                                                                    |
+| Cabling faults            | Many problems can be corrected by simply reseating cables that have become partially disconnected. When performing a physical inspection, look for damaged cables, improper cable types, and poorly crimped RJ-45 connectors. Suspect cables should be tested or exchanged with a known functioning cable.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Attenuation               | Attenuation can be caused if a cable length exceeds the design limit for the media, or when there is a poor connection resulting from a loose cable, or dirty or oxidized contacts. If attenuation is severe, the receiving device cannot always successfully distinguish one bit in the data stream from another bit.                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Noise                     | Local electromagnetic interference (EMI) is commonly known as noise. Noise can be generated by many sources, such as FM radio stations, police radio, building security, and avionics for automated landing, crosstalk (noise induced by other cables in the same pathway or adjacent cables), nearby electric cables, devices with large electric motors, or anything that includes a transmitter more powerful than a cell phone.                                                                                                                                                                                                                                                                                                                     |
+| Interface configuration errors | Many things can be misconfigured on an interface to cause it to go down, such as incorrect clock rate, incorrect clock source, and interface not being turned on. This causes a loss of connectivity with attached network segments.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Exceeding design limits   | A component may be operating sub-optimally at the physical layer because it is being utilized beyond specifications or configured capacity. When troubleshooting this type of problem, it becomes evident that resources for the device are operating at or near the maximum capacity and there is an increase in the number of interface errors.                                                                                                                                                                                                                                                                                                                                                                                                 |
+| CPU overload              | Symptoms include processes with high CPU utilization percentages, input queue drops, slow performance, SNMP timeouts, no remote access, or services such as DHCP, Telnet, and ping are slow or fail to respond. On a switch the following could occur: spanning tree reconvergence, EtherChannel links bounce, UDLD flapping, IP SLAs failures. For routers, there could be no routing updates, route flapping, or HSRP flapping. One of the causes of CPU overload in a router or switch is high traffic. If one or more interfaces are regularly overloaded with traffic, consider redesigning the traffic flow in the network or upgrading the hardware. |
+
+
+
+### Data Link Layer
+
