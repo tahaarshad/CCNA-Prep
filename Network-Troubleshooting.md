@@ -98,5 +98,14 @@ Solve the Problem and
 Doctnnent Solution
 
 
+###Question End Users
+| Guidelines | Questions |
+| --- | --- |
+| Ask pertinent questions.	| What does not work? What exactly is the problem? What are you trying to accomplish?|
+| Determine the scope of the problem | Who does this issue affect? Is it just you or others? What device is this happening on? |
+| Determine when the problem occurred / occurs. | When exactly does the problem occur? When was the problem first noticed? Were there any error message(s) displayed? |
+| Determine if the problem is constant or intermittent. | Can you reproduce the problem? Can you send me a screenshot or video of the problem? |
+| Determine if anything has changed. | What has changed since the last time it did work ? |
+| Use questions to eliminate or discover possible problems. | What works? What does not work? |
 
-
+***Gather Information using IOS Commands***
