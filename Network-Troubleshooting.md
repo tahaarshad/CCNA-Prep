@@ -76,3 +76,27 @@ show port
 show tech-support
 
 ## Toublesooting Process
+***Process***
+Stage 1: Gather Symptoms
+Stage 2: Isolate the Problem
+Stage 3: Implement Corrective Action
+Problem Fixed?
+No - If it did not fix the problem or it it
+created another problem, undo
+corrective action and start agaim
+Yes - Stage 4: Document solution and
+save changes.
+
+***7-Step Process***
+Define Problern
+Gather Information
+Analyze Information
+Eliminate Possible Causes
+Propose Hypothesis
+Test Hypothesis
+Solve the Problem and
+Doctnnent Solution
+
+
+
+
