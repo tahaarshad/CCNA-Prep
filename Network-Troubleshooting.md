@@ -109,3 +109,11 @@ Doctnnent Solution
 | Use questions to eliminate or discover possible problems. | What works? What does not work? |
 
 ***Gather Information using IOS Commands***
+***Troubleshooting with Layered Models***
+- Bottom-Up = hw oriented
+- Top-Down = sw oriented
+- Divide-and-Conquer = experienced before
+- Follow-the-Path
+- Substitution
+- Comparison
+- Educated Guess
