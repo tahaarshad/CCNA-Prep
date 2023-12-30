@@ -60,3 +60,47 @@ The SDN controller uses northbound APIs to communicate with the upstream applica
 
 The figure illustrates the complete SDN framework. The figure has three sections: the application layer, control plane and data plane. At the application layer, there are business applications, cloud orchestration, and SDN applications. At the control plane, there is the SDN controller. The SDN controller is providing routing, traffic engineering and mobility. Between the application layer and the control are arrows indicating the Northbound APIs used to communicate between the SDN and applications. The data plane has a hub and spoke topology of eight routers and switches. Between the control plane and the data plane is an arrow indicating the Southbound APIs used between the SDN and the routers and switches.
 
+## SDN Controllers
+The SDN controller defines the data flows between the centralized control plane and the data planes on individual routers and switches.
+
+Each flow traveling through the network must first get permission from the SDN controller, which verifies that the communication is permissible according to the network policy. If the controller allows a flow, it computes a route for the flow to take and adds an entry for that flow in each of the switches along the path.
+
+All complex functions are performed by the controller. The controller populates flow tables. Switches manage the flow tables.
+
+Flow Table - This table matches incoming packets to a particular flow and specifies the functions that are to be performed on the packets. There may be multiple flow tables that operate in a pipeline fashion.
+Group Table - A flow table may direct a flow to a Group Table, which may trigger a variety of actions that affect one or more flows
+Meter Table - This table triggers a variety of performance-related actions on a flow including the ability to rate-limit the traffic.
+
+## Cisco ACI
+Cisco developed the Application Centric Infrastructure (ACI) to meet these objectives in more advanced and innovative ways than earlier SDN approaches.
+
+Cisco ACI is a hardware solution for integrating cloud computing and data center management. At a high level, the policy element of the network is removed from the data plane. This simplifies the way data center networks are created.
+
+***Components of the ACI architecture:***
+
+- Application Network Profile (ANP) - An ANP is a collection of end-point groups (EPG), their connections, and the policies that define those connections. The EPGs shown in the figure, such as VLANs, web services, and applications, are just examples. An ANP is often much more complex.
+- Application Policy Infrastructure Controller (APIC) - The APIC is considered to be the brains of the ACI architecture. APIC is a centralized software controller that manages and operates a scalable ACI clustered fabric. It is designed for programmability and centralized management. It translates application policies into network programming.
+- Cisco Nexus 9000 Series switches - These switches provide an application-aware switching fabric and work with an APIC to manage the virtual and physical network infrastructure.
+
+***Spine-Leaf Topology***
+The Cisco ACI fabric is composed of the APIC and the Cisco Nexus 9000 series switches using two-tier spine-leaf topology, as shown in the figure. The leaf switches always attach to the spines, but they never attach to each other. Similarly, the spine switches only attach to the leaf and core switches (not shown). In this two-tier topology, everything is one hop from everything else.
+
+The Cisco APICs and all other devices in the network physically attach to leaf switches.
+
+***SDN Types***
+- Controller-based SDN: In this type of SDN, the devices are programmable by applications running on the device itself or on a server in the network.
+- Policy-based SDN: his type of SDN uses a centralized controller that has knowledge of all devices in the network.
+- Device-based SDN: This type of SDN is similar to controller-based SDN where a centralized controller has a view of all devices in the network. Policy-based SDN includes an additional Policy layer that operates at a higher level of abstraction. It uses built-in applications that automate advanced configuration tasks via a guided workflow and user-friendly GUI.
+
+***APIC-EM Features***
+Each type of SDN has its own features and advantages. Policy-based SDN is the most robust, providing for a simple mechanism to control and manage policies across the entire network.
+
+Cisco APIC-EM is an example of policy-based SDN. Cisco APIC-EM provides a single interface for network management including:
+
+discovering and accessing device and host inventories,
+viewing the topology,
+tracing a path between end points, and
+setting policies.
+
+APIC-EM Path Trace
+The APIC-EM Path Trace tool allows the administrator to easily visualize traffic flows and discover any conflicting, duplicate, or shadowed ACL entries. This tool examines specific ACLs on the path between two end nodes, displaying any potential issues. You can see where any ACLs along the path either permitted or denied your traffic,
