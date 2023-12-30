@@ -104,3 +104,11 @@ setting policies.
 
 APIC-EM Path Trace
 The APIC-EM Path Trace tool allows the administrator to easily visualize traffic flows and discover any conflicting, duplicate, or shadowed ACL entries. This tool examines specific ACLs on the path between two end nodes, displaying any potential issues. You can see where any ACLs along the path either permitted or denied your traffic,
+
+The following abstraction layers make up a computer system:
+Hardware
+Firmware
+Assembler
+Kernel
+OS
+Services
