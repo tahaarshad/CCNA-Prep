@@ -67,3 +67,20 @@ It uses indentation to define its structure, without the use of brackets or comm
 It is like HTML , which is the standardized markup language for creating web pages and web applications.
 It is self-descriptive. It encloses data within a related set of tags: <-tag>data</-tag>
 Unlike HTML, XML uses no predefined tags or document structure.
+
+
+## API
+An API is software that allows other applications to access its data or services. It is a set of rules describing how one application can interact with another, and the instructions to allow the interaction to occur.
+
+### Types
+- Open APIs or Public APIs - These APIs are publicly available and can be used with no restrictions.
+- Internal or Private APIs - These are APIs that are used by an organization or company to access data and services for internal use only.
+- Partner APIs - These are APIs that are used between a company and its business partners or contractors to facilitate business between them.
+
+### Web Service APIs
+- Simple Object Access Protocol (SOAP)
+- Representational State Transfer (REST)
+- eXtensible Markup Language-Remote Procedure Call (XML-RPC)
+- JavaScript Object Notation-Remote Procedure Call (JSON-RPC)
+
+## REST and RESTful APIs
