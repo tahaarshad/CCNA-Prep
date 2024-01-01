@@ -112,3 +112,6 @@ Assembler
 Kernel
 OS
 Services
+
+
+CEF uses the FIB and adjacency table to make fast forwarding decisions without control plane processing. The adjacency table is pre-populated by the ARP table and the FIB is pre-populated by the routing table.​
