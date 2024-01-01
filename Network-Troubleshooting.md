@@ -279,7 +279,27 @@ R1(config)#
 - Step 4. Verify that the default gateway is correct.
     - R1# show ip route | include Gateway|0.0.0.0
     - C:\> route print (for windows)
-Step 5. Ensure that devices are determining the correct path from the source to the destination. Manipulate the routing information if necessary.
-Step 6. Verify the transport layer is functioning properly. Telnet can also be used to test transport layer connections from the command line.
-Step 7. Verify that there are no ACLs blocking traffic.
-Step 8. Ensure that DNS settings are correct. There should be a DNS server that is accessible.
+    - ipv6: 
+        - R1 Routing Table = show ipv6 route
+        - PC1 Addressing = ipconfig 
+        - Check R1 Interface Settings = show ipv6 interface GigabitEthernet 0/0/0. reveals that although the interface has an IPv6 address, it is not a member of the All-IPv6-Routers multicast group FF02::2. This means the router is not enabled as an IPv6 router. Therefore, it is not sending out ICMPv6 RAs on this interface.
+        - Correct R1 IPv6 Routing = R1 is enabled as an IPv6 router using the ipv6 unicast-routing command. The show ipv6 interface GigabitEthernet 0/0/0 command verifies that R1 is a member of ff02::2, the All-IPv6-Routers multicast group.
+        - Verify PC1 Has an IPv6 Default Gateway = ipconfig
+
+- Step 5. Ensure that devices are determining the correct path from the source to the destination. Manipulate the routing information if necessary.
+    - show ip route
+    - The IPv4 and IPv6 routing tables can be populated by the following methods:
+Directly connected networks
+Local host or local routes
+Static routes
+Dynamic routes
+Default routes
+The process of forwarding IPv4 and IPv6 packets is based on the longest bit match or longest prefix match. The routing table process will attempt to forward the packet using an entry in the routing table with the greatest number of leftmost matching bits. The number of matching bits is indicated by the prefix length of the route.
+
+
+- Step 6. Verify the transport layer is functioning properly. Telnet can also be used to test transport layer connections from the command line.
+    - able to ping but telnet is not working
+- Step 7. Verify that there are no ACLs blocking traffic.
+    - show ip access-lists and show ip interfaces to verify
+- Step 8. Ensure that DNS settings are correct. There should be a DNS server that is accessible.
+    - maually enter mapping= R1(config)# ip host ipv4-server 172.16.1.100
