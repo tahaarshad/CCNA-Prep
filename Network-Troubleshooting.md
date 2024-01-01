@@ -260,9 +260,25 @@ R1(config)#
 
 - Step 1. Check physical connectivity at the point where network communication stops. This includes cables and hardware. The problem might be with a faulty cable or interface, or involve misconfigured or faulty hardware.
     - The most commonly used Cisco IOS commands for this purpose are show processes cpu, show memory, and show interfaces. This topic discusses the show interfaces command.
-Step 2. Check for duplex mismatches.
-Step 3. Check data link and network layer addressing on the local network. This includes IPv4 ARP tables, IPv6 neighbor tables, MAC address tables, and VLAN assignments.
-Step 4. Verify that the default gateway is correct.
+    - Input queue drops: more traffic was delivered to the router than it could process.it could be an indication that the CPU cannot process packets in time, so if this number is consistently high, it is worth trying to spot at which moments these counters are increasing and how this relates to CPU usage.
+    - Output queue drops:  packets were dropped due to congestion on the interface.
+    - Input errors: CRC errors. High numbers of CRC errors could indicate cabling problems, interface hardware problems, or, in an Ethernet-based network, duplex mismatches.
+    - Output errors: collisions (especially late collisions) often indicate duplex mismatches
+
+- Step 2. Check for duplex mismatches.
+    - Using the show interfaces fa 0/20 command, the network administrator examines the interface. The network administrator corrects the setting to duplex auto to automatically negotiate the duplex. Because the port on S1 is set to full-duplex, S2 also uses full-duplex.
+
+
+- Step 3. Check data link and network layer addressing on the local network. This includes IPv4 ARP tables, IPv6 neighbor tables, MAC address tables, and VLAN assignments.
+    - Windows IPv4 ARP Table: arp -a to view entries and arp -d to clear cache.
+    - Windows IPv6 Neighbor Table: netsh interface ipv6 show neighbor
+    - IOS IPv6 Neighbor Table: show ipv6 neighbors
+    - Switch MAC Address Table: show mac address-table (view vlan assignment)
+
+
+- Step 4. Verify that the default gateway is correct.
+    - R1# show ip route | include Gateway|0.0.0.0
+    - C:\> route print (for windows)
 Step 5. Ensure that devices are determining the correct path from the source to the destination. Manipulate the routing information if necessary.
 Step 6. Verify the transport layer is functioning properly. Telnet can also be used to test transport layer connections from the command line.
 Step 7. Verify that there are no ACLs blocking traffic.
