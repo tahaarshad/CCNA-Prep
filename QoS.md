@@ -105,3 +105,14 @@ Some congestion avoidance techniques provide preferential treatment for which pa
 
 What happens when an edge router using IntServ QoS determines that the data pathway cannot support the level of QoS requested?
 Data is not forwarded
+
+
+
+
+Marking traffic at Layer 2 or Layer 3 is very important and will affect how traffic is treated in a network using QoS.
+Layer 2 marking of frames can be performed for non-IP traffic.
+Layer 2 marking of frames is the only QoS option available for switches that are not "IP aware."
+Layer 3 marking will carry the QoS information end-to-end.
+
+Refer to the exhibit. Why are routers R1 and R2 not able to establish an OSPF adjacency?​
+On router R1, the network 192.168.10.0/30 is defined in the wrong area (area 1). It has to be defined in area 0 in order to establish adjacency with router R2, which has the network 192.168.10.0/30 defined in area 0.

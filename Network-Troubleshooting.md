@@ -303,3 +303,10 @@ The process of forwarding IPv4 and IPv6 packets is based on the longest bit matc
     - show ip access-lists and show ip interfaces to verify
 - Step 8. Ensure that DNS settings are correct. There should be a DNS server that is accessible.
     - maually enter mapping= R1(config)# ip host ipv4-server 172.16.1.100
+
+
+
+
+What is the principle that is applied when a network technician is troubleshooting a network fault by using the divide-and-conquer method?
+The nature of the OSI and TCP/IP layered models is that upper layers are dependent on lower layers. So when troubleshooting, if a particular layer is found to be working correctly then it can be assumed that all layers below it are also functioning correctly.
+This item references content from the following areas:
