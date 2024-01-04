@@ -17,6 +17,9 @@ __Interior Gateway Protocol:__ Designed to be used withing a single automonous s
 __Classless:__ Classless networks include subnet masks in their routing updates. Classful do not as they all are in the same subnet.
 
 __Cost of Path depends on Bandwidth:__ uses formula ***cost = reference bandwidth/interface bandwidth***
+All values less than 1 will be converted to 1.
+The command is entered in megabits per 
+second (default is 100)
 
 
 other: 
@@ -64,15 +67,24 @@ other:
 
 ## Area
 
-Single Area OSPF routers exist in one domain - Area 0
+- Single Area OSPF routers exist in one domain - Area 0
 
-Multi Area have multiple domains with one **backbone** (Area 0). **Area Border Routers** exist on the edge of each domain.
+- Multi Area have multiple domains with one **backbone** (Area 0). 
+
+- **Area Border Routers** exist on the edge of each domain and have interfaces in multiple areas.
+
+- Routers with all interfaces in the same area are called internal routers.
+
+- An intra-area route is a route to a destination inside the same OSPF area
+
+- An interarea route is a route to a destination in a different OSPF area
 
 Several Advantages:
 - Reduced SPF calculations
 - Smaller tables
 - Reduces LSU overhead
 
+All OSPF areas must have at least one ABR connected to the backbone area.
 
 ## OSPFv3
 
@@ -110,7 +122,7 @@ Type 1 packets elect the DR and BDR. multiaccess connections like ethernet requi
 
 ### OSPF Multicast address - 224.0.0.5
 ### Messages to the DR/BDR are multicast using address 224.0.0.6
-
+### Default timers: Hello 10, Dead 40
 ### Ruuter ID is 32 bit address similar to IPv4
 
 ## Importance of DR
@@ -119,8 +131,6 @@ Challenges:
 - Creation of Multiple Adjacencies
 
 The DR will receive the LSA and flood it to others.
-
-## MultiAccess OSPF
 
 New DR selection occurs if:
 - DR fails
@@ -136,3 +146,52 @@ New DR selection occurs if:
 - - Router ID is the highest active interface IPv4 address
 
 
+### Passive Interface
+The passive-interface command tells the router 
+to stop sending OSPF ‘hello’ messages out of 
+the interface.
+
+## Router ID order of priority:
+1) Manual configuration
+2) Highest IP address on a loopback interface
+3) Highest IP address on a physical interface
+
+
+## The DR/BDR election order of priority:
+1) Highest OSPF interface priority
+2) Highest OSPF Router ID
+ 
+_The default OSPF interface priority is 1 on all interfaces_
+
+DROthers (R3 and R5 in this subnet) will only move to the FULL state with the DR and BDR. The neighbor state with other DROthers will be 2-way
+
+An autonomous system boundary router (ASBR) is an OSPF router that connects the OSPF network to an external network.
+
+There are three main OSPF network types:
+
+***Broadcast***
+- enabled by default on Ethernet and FDDI (Fiber Distributed Data Interface) interfaces
+
+***Point-to-point***
+- enabled by default on PPP (Point-to-Point Protocol) and HDLC (High-Level Data Link Control) interfaces
+
+***Non-broadcast***
+- enabled by default on Frame Relay and X.25 interfaces
+
+
+## Point to Point
+- Enabled on serial interfaces using the PPP or HDLC encapsulations by default.
+- Routers dynamically discover neighbors by sending/listening for OSPF Hello messages using 
+multicast address 224.0.0.5.
+- A DR and BDR are not elected. 
+- These encapsulations are used for ‘point-to-point’ connections.
+- Therefore there is no point in electing a DR and BDR.
+- The two routers will form a Full adjacency with each other.
+- The default encapsulation is HDLC.
+- You can configure PPP encapsulation with this command: 
+R1(config-if)# encapsulation ppp
+- One side is DCE, one side is DTE.
+- Identify which side is DCE/DTE: 
+R1# show controllers interface-id
+- You must configure the clock rate on the DCE side:
+R1(config-if)# clock rate bits-per-second
