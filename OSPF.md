@@ -1,28 +1,37 @@
-# OSPF Concept
+# Open Shortest Path First
+Configure and verify single area OSPFv2
+3.4.a Neighbor adjacencies
+3.4.b Point-to-point
+3.4.c Broadcast (DR/BDR selection)
+3.4.d Router ID
 
-Improvement over RIP protocol that does not only use the hop count to decide the best possible path to transfer packets.
+## OSPF Concept
 
-Some characteristics of OSPF:
-Link-state protocol: Networks are divided into domains known as areas for updating routing traffic. Interfaces on routers are known as Links. So are network segments. Information on these links is called link-state. this includes network prefix, prefix length and cost.
+Improvement over ***RIP protocol that does not only use the hop count to decide the best possible path to transfer packets***.
 
-Interior Gateway Protocol: Designed to be used withing a single automonous system such as an organization with multiple departments.
+__Some characteristics of OSPF:__
+__Link-state protocol:__ ***Networks are divided into domains known as areas for updating routing traffic***. Interfaces on routers are known as Links. So are network segments. **Information on these links is called link-state. this includes network prefix, prefix length and cost.**
 
-Classless: Classless networks include subnet masks in their routing updates. Classful do not as they all are in the same subnet.
+__Interior Gateway Protocol:__ Designed to be used withing a single automonous system such as an organization with multiple departments.
 
-Cost of Path depends on Bandwidth: uses formula cost = reference bandwidth/interface bandwidth
+__Classless:__ Classless networks include subnet masks in their routing updates. Classful do not as they all are in the same subnet.
+
+__Cost of Path depends on Bandwidth:__ uses formula ***cost = reference bandwidth/interface bandwidth***
 
 
-other: Dijkstra algorithm
-Builds topological map
-Event-driven updates
-Hierarchical design
-Requires additional memory, CPU processing, and more initial bandwidth than other protocols
+other: 
+
+***Shortest Path First Algorithm or Dijkstra algorithm***
+- Builds topological map
+- Event-driven updates
+- Hierarchical design
+- Requires ***additional memory, CPU processing, and more initial bandwidth than other protocols***
 
 ## Component
 
 5 types of packets are exchanged:
 - Hello - Type 1
-- database description - Type 2
+- Database Description - Type 2
 - LS Request - Type 3
 - LS Update - Type 4
 - LS Ack - Type 5
@@ -31,19 +40,23 @@ Requires additional memory, CPU processing, and more initial bandwidth than othe
 ## Databases and Tables
 
 3 databases store 3 different tables:
-- Adjacency DB stores neighbor table - contain adjacent routers. Can be viewed using show ip ospf neighbor
-- Link State db store topology table - contains all routers in an area. Can be viewed using show ip ospf database. SPF algorithm is run here
-- Routing db stores forwarding table - stores routes generated from the algorithm. Can be viewed using show ip route
+- ***Adjacency DB stores neighbor table*** - contain adjacent routers. Can be viewed using show ip ospf neighbor
+- ***Link State db store topology table*** - contains all routers in an area. Can be viewed using show ip ospf database. SPF algorithm is run here
+- ***Routing db stores forwarding table*** - stores routes generated from the algorithm. Can be viewed using show ip route
 
 
 ## 5 steps to building routing table
 
 - Establish adjacencies by sending hello packets
-- - Cause of adjacnecy failure
-- -  subnet mask do not match
-- - hello/dead interval timers do not match
-- - incorrect ospf commands
-- - network types do not match
+  - ***Cause of adjacnecy failure:***
+  - area must match
+  - interface must be in the same subnet
+  -  OSPF process must not be shutdown
+  - router ID must be unique
+  - hello/dead timers must match
+  - autentication settings must match
+  - IP MTU settings must match
+  - OSPF network type must match
 - Send LS Advertisements to all nearby router
 - Once every router has sent each other LSA's, then the LSDB is created
 - The algorithm is exevuted
@@ -53,7 +66,7 @@ Requires additional memory, CPU processing, and more initial bandwidth than othe
 
 Single Area OSPF routers exist in one domain - Area 0
 
-Multi Area have multiple domains with one backbone (Area 0). Area Border ROuters exist on the edge of each domain.
+Multi Area have multiple domains with one **backbone** (Area 0). **Area Border Routers** exist on the edge of each domain.
 
 Several Advantages:
 - Reduced SPF calculations
@@ -68,24 +81,37 @@ v3 is the IPv6 equivaltent of OSPFv2 which is for IPv4. Similar characteristincs
 
 ## Important Packet Information
 
-LSU contains upto 11 differents LSA packets with different information such as routers, network etc.
+_LSU contains upto 11 differents LSA packets with different information such as routers, network etc._
+
+- **Type 1 (Router LSA)**
+    - Every OSPF router generates this type of LSA. 
+    - It identifies the router using its router ID.
+    - It also lists networks attached to the router’s OSPF-activated interfaces.
+- **Type 2 (Network LSA)**
+    - Generated by the DR of each ‘multi-access’ network (ie. the broadcast network type).
+    - Lists the routers which are attached to the multi-access network.
+- **Type 5 (AS-External LSA)**
+    - Generated by ASBRs to describe routes to destinations outside of the AS (OSPF domain).
+
 
 Type 1 packets elect the DR and BDR. multiaccess connections like ethernet require DR and BDR but point ot point networks to do not.
 
 
 ## 7 OSPF States
 
-- Down - no hello packets. Once packet is sent, move to init.
-- Init - hello packet contain router id. transistion to 2 way.
-- 2-way - bidirectional communications. DR and BDR are eleced.
-- exstart - on ptp connection, routers will decide which one will send BDB first.
-- exchange - once elected, DBD is shared.
-- loading - LSR and LSU are exchanges, SPF is run. then change to full
-- full - fully synchronised.
+- **Down** - no hello packets. Once packet is sent, move to init.
+- **Init** - hello packet contain router id. transistion to 2 way.
+- **2-way** - bidirectional communications. DR and BDR are eleced.
+- **exstart** - on ptp connection, routers will decide which one will send BDB first (slave and master). Higher RID will become Master
+- **exchange** - once elected, DBD is shared.
+- **loading** - LSR and LSU are exchanged, SPF is run. then change to full
+- **full** - fully synchronised.
 
 
 ### OSPF Multicast address - 224.0.0.5
-### ROuter ID is 32 bit address similar to IPv4
+### Messages to the DR/BDR are multicast using address 224.0.0.6
+
+### Ruuter ID is 32 bit address similar to IPv4
 
 ## Importance of DR
 Challenges:
