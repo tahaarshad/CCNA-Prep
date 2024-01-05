@@ -136,3 +136,28 @@ R1(config-ext-nacl)# 10 permit tcp 192.168.10.0 0.0.0.255 any eq www
 - show access-lists
 - show running-config
 - show ip interface
+
+
+## ACL Resequencing
+The command is ip access-list resequence acl-id starting-seq-num increment
+
+
+## Important Port numbers
+TCP
+● FTP data (20)
+● FTP control (21)
+● SSH (22)
+● Telnet (23)
+● SMTP (25)
+● HTTP (80)
+● POP3 (110)
+● HTTPS (443)
+UDP
+● DHCP server (67)
+● DHCP client (68)
+● TFTP (69)
+● SNMP agent (161)
+● SNMP manager (162)
+● Syslog (514)
+TCP & UDP
+● DNS (53)

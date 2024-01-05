@@ -1,7 +1,9 @@
+# 5.6 Configure and verify access control lists
+
 # Access Control Lists
 Packet Filtering
-- Standard = Operate on Layer 3
-- Extended = Layer 3 for IP Filtering and Layer 4 for TCP/UDP Filtering
+- **Standard** = Operate on Layer 3 = 1-99 and 1300-1999
+- **Extended** = Layer 3 for IP Filtering and Layer 4 for TCP/UDP Filtering = 100-199 and 2000-2699
 
 ## Operation
 Inbound ACL and Outbound ACL
@@ -57,3 +59,6 @@ Numbers: 1-99 and 1300-1999 for standard, and 100-199 and 2000-2699 for Extended
 ## Placement
 - Standard ACL should be close to the destination
 - Extended ACL should be close to the source
+
+When configuring/editing numbered ACLs from global config mode, 
+you can’t delete individual entries, you can only delete the entire ACL!
