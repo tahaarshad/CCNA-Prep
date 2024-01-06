@@ -73,3 +73,7 @@ show ip nat translations - look for different port numbers
 
 show ip nat statistics - look for "type generic, total addresses 15, allocated 1 (6%), misses 0"
 
+## Additional: Use router public IP address as translation.
+R1(config)#ip nat inside source list 1 interface g0/0 overload
+
+no need to define pool
