@@ -1,4 +1,7 @@
+# 5.1 Define key security concepts (threats, vulnerabilities, exploits, and mitigation techniques)
+
 # Network Security
+
 
 ## Terms
 - Asset = Something of vlue
@@ -41,7 +44,10 @@
 - Compromised Key
 - Sniffer
 
-### Trojan Horses - Act like legitemate applications but perform various actions behind the scenes
+### Trojan Horses - Act like legitemate applications but perform various actions behind the scenes. Worms are standable. Do not require host.
+
+***Watering hole attacks compromise sites that the target victim frequently visits. If a malicious link is placed 
+on a website the target trusts, they might not hesitate to click it.***
 
 ### Rootkits are used to gain admin level access to computers
 
@@ -125,3 +131,47 @@ Symmetric Key - One Key for all
 
 Assymetric - public and private keys = SSL, SSH
 - DH, DSS, DSA, RSA
+
+
+## Extra
+5.2 Describe security program elements (user awareness, training, and physical access control)
+5.4 Describe security password policies elements, such as management, complexity, and 
+password alternatives (multifactor authentication, certificates, and biometrics)
+5.8 Compare authentication, authorization, and accounting concepts
+
+***Multi-factor authentication ***
+involves providing more than just a username/password to prove your identity.
+● It usually involves providing two of the following (=two-factor authentication):
+● Something you know
+→ a username/password combination, a PIN, etc.
+● Something you have
+→ pressing a notification that appears on your phone, a badge that is scanned, etc.
+● Something you are
+→ biometrics
+
+****Digital certificates****
+another form of authentication used to prove the identity of the holder of the 
+certificate.
+● They are used for websites to verify that the website being accessed is legitimate.
+● Entities that want a certificate to prove their identity send a CSR (Certificate Signing Request) to a CA (Certificate Authority), which will generate and sign the certificate
+
+***AAA (triple-A)***
+stands for Authentication, Authorization, and Accounting.
+● It is a framework for controlling and monitor users of a computer system (ie. a network).
+● Authentication is the process of verifying a user’s identity.
+→ logging in = authentication
+● Authorization is the process of granting the user the appropriate access and permissions.
+→ granting the user access to some files/services, restricting access to other files/services = authorization
+● Accounting is the process of recording the user’s activities on the system.
+→ logging when a user makes a change to a file = accounting
+● Enterprises typically use a AAA server to provide AAA services.
+
+***Security Program Elements***
+**User awareness** programs are designed to make employees aware of potential security threats and risks.
+→ For example, a company might send out false phishing emails to make employees click a link and sign in 
+with their login credentials.
+**User training** programs are more formal than user awareness programs.
+→ For example, dedicated training sessions which educate users on the corporate security policies, how to 
+create strong passwords, and how to avoid potential threats.
+**Physical access control** protects equipment and data from potential attackers by only allowing authorized 
+users into protected areas such as network closets or data center floors.
