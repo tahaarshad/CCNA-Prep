@@ -195,3 +195,7 @@ R1(config-if)# encapsulation ppp
 R1# show controllers interface-id
 - You must configure the clock rate on the DCE side:
 R1(config-if)# clock rate bits-per-second
+
+
+Refer to the exhibit. Why are routers R1 and R2 not able to establish an OSPF adjacency?​
+On router R1, the network 192.168.10.0/30 is defined in the wrong area (area 1). It has to be defined in area 0 in order to establish adjacency with router R2, which has the network 192.168.10.0/30 defined in area 0.
