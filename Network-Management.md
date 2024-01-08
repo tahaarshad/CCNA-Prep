@@ -1,4 +1,5 @@
 # 2.3 Configure and verify Layer 2 discovery protocols (Cisco Discovery Protocol and LLDP)
+# 4.2 Configure and verify NTP operating in a client and server mode
 
 # Network Management
 ## Cisco Discovery Protocol
@@ -99,6 +100,9 @@ Clock is synchronized, stratum 2, reference is 209.165.200.225
 - configure switch with router ip as ntp
     - S1(config)# ntp server 192.168.1.1
 S1(config)# end
+
+### extra info
+
 
 ## Simple Network Management Protocol
 SNMP is an application layer protocol that provides a message format for communication between managers and agents. The SNMP system consists of three elements:
