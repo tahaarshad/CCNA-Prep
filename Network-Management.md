@@ -1,19 +1,26 @@
+# 2.3 Configure and verify Layer 2 discovery protocols (Cisco Discovery Protocol and LLDP)
+
 # Network Management
 ## Cisco Discovery Protocol
 Layer 2. Discover cisco devices, their names and type of interfaces. Send advertisements periodically.
-
+By default, CDP messages are sent once every 60 seconds.
+By default, the CDP holdtime is 180 seconds. If a message isn’t received from a neighbor for 180 seconds, the neighbor is removed from the CDP neighbor table.
+CDP messages are periodically sent to multicast MAC address 0100.0CCC.CCCC.
 ### Configure and verify
 - cdp run
 - no cdp run
-- show cdp
+- show cdp: global info such as time and version
+- show cdp traffic: number of packets transmitted
 
 To disable or enable on specifici interfaces:
 - int g0/0
 - cdp enable or no cdp enable
 
 view:
-- show cdp neighbors
+- show cdp neighbors: neighbors
+- show cdp neighbors detail: vtp, vlan and duplex info, ip address
 - show cdp interface: for only cdp enabled interfaces
+- show cdp entry R2: specific device
 
 Device identifiers - This is the host name of the neighbor device (S1).
 Port identifier - This is the name of the local and remote port (G0/0/1 and F0/5, respectively).
@@ -22,12 +29,24 @@ Platform - This is the hardware platform of the device (WS-C3560 for Cisco 3560 
 
 The network administrator uses show cdp neighbors detail to discover the IP address for S1
 
+- R1(config)# cdp timer seconds
+- R1(config)# cdp holdtime seconds
+  
+
 ## Link Layer Discovery Protocol
 Same as CDP but vendor-neutral
+LLDP messages are periodically sent to multicast MAC address 0180.C200.000E.
+
+LLDP messages are sent once every 30 seconds.
+By default, the LLDP holdtime is 120 seconds.
+LLDP has an additional timer called the ‘reinitialization delay’. If LLDP is enabled (globally or on an interface), this timer will delay the actual initialization of LLDP. 2 seconds by default.
 
 ### Configure and Verify
 - lldp run
 - no lldp run
+- lldp timer seconds
+- lldp holdtime seconds
+- lldp reinit seconds
 
 Specific interface
 - int g0/0
@@ -38,8 +57,10 @@ verify
 - show lldp
 - show lldp neighbors
 - show lldp neighbors detail
+- show lldp traffic
+- show lldp entry R2
 
-
+in LLDP, the switch is shown as Bridge
 ## NEtwork Time Protocol
 Configure date and time on devices
 
