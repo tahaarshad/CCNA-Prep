@@ -1,6 +1,6 @@
 # 2.3 Configure and verify Layer 2 discovery protocols (Cisco Discovery Protocol and LLDP)
 # 4.2 Configure and verify NTP operating in a client and server mode
-
+# 4.4 Explain the function of SNMP in network operations
 # 4.5 Describe the use of syslog features including facilities and levels
 
 # Network Management
@@ -142,11 +142,18 @@ R2(config)#ntp peer 10.0.23.2 key 1
 ## Simple Network Management Protocol
 SNMP is an application layer protocol that provides a message format for communication between managers and agents. The SNMP system consists of three elements:
 
-SNMP manager
-SNMP agents (managed node)
-Management Information Base (MIB)
+SNMP manager - Network Management Station. The device that manages agents.
+SNMP agents (managed node) - devices being managed by SNMP
+Management Information Base (MIB) -  is the structure that contains the variables that are 
+managed by SNMP.
+→Each variable is identified with an Object ID (OID)
+→Example variables: Interface status, traffic throughput, CPU usage, temperature, etc.
+
 
 The SNMP manager can collect information from an SNMP agent by using the “get” action and can change configurations on an agent by using the “set” action. In addition, SNMP agents can forward information directly to a network manager by using “traps”.
+
+SNMP Agent = UDP 161
+SNMP Manager = UDP 162
 
 ### SNMP Operations
 - get-request:Retrieves a value from a specific variable.
@@ -159,13 +166,15 @@ The SNMP manager can collect information from an SNMP agent by using the “get�
 
 - set-request: Stores a value in a specific variable.
 
-The SNMP agent responds to SNMP manager requests as follows:
 
-Get an MIB variable - The SNMP agent performs this function in response to a GetRequest-PDU from the network manager. The agent retrieves the value of the requested MIB variable and responds to the network manager with that value.
-Set an MIB variable - The SNMP agent performs this function in response to a SetRequest-PDU from the network manager. The SNMP agent changes the value of the MIB variable to the value specified by the network manager. An SNMP agent reply to a set request includes the new settings in the device.
+| Message Class | Description                                                                 | Messages       |
+|---------------|-----------------------------------------------------------------------------|----------------|
+| Read          | Messages sent by the NMS to read information from the managed devices. (ie. What’s your current CPU usage %?) | Get, GetNext, GetBulk |
+| Write         | Messages sent by the NMS to change information on the managed devices. (ie. change an IP address) | Set           |
+| Notification  | Messages sent by the managed devices to alert the NMS of a particular event. (ie. interface going down) | Trap, Inform  |
+| Response      | Messages sent in response to a previous message/request.                    | Response       |
 
-### SNMP Agent Traps
-To mitigate these disadvantages, it is possible for SNMP agents to generate and send traps to inform the NMS immediately of certain events. Traps are unsolicited messages alerting the SNMP manager to a condition or event on the network. Examples of trap conditions include, but are not limited to, improper user authentication, restarts, link status (up or down), MAC address tracking, closing of a TCP connection, loss of connection to a neighbor, or other significant events. Trap-directed notifications reduce network and agent resources by eliminating the need for some of SNMP polling requests.
+Trap messages do not receive acknowledgement.
 
 ### SNMP Version
 SNMPv1 - This is the Simple Network Management Protocol, a Full Internet Standard, that is defined in RFC 1157.
@@ -174,6 +183,8 @@ SNMPv3 - This is an interoperable standards-based protocol originally defined in
 
 
 SNMPv1 is the original version of the protocol and provides the most basic functionality required for data polling without using significant resources. However, SNMPv1 has very basic security and doesn’t include any encryption algorithms. SNMPv2c is nearly identical to SNMPv1, except for different version number in the encoding, new data type(s), and Get-Bulk requests that are not supported by SNMPv1. SNMPv3 is the most recent version and offers advanced security features, including authentication and encryption, to protect SNMP communication
+
+
 ## Syslog
 Accessing System Messages. Syslog uses UDP port 514 to send event notification messages across IP networks to event message collectors.
 
@@ -186,18 +197,34 @@ On Cisco network devices, the syslog protocol starts by sending system messages 
 
 As shown in the figure, popular destinations for syslog messages include the following:
 
-- Logging buffer (RAM inside a router or switch)
-- Console line
-- Terminal line
-- Syslog server
+Console line: Syslog messages will be displayed in the CLI when connected to the device 
+via the console port. By default, all messages (level 0 – level 7) are displayed.
+● VTY lines: Syslog messages will be displayed in the CLI when connected to the device via 
+Telnet/SSH (coming in a later video). Disabled by default. 
+● Buffer: Syslog messages will be saved to RAM. By default, all messages (level 0 – level 7) 
+are displayed. 
+→You can view the messages with show logging.
+● External server: You can configure the device to send Syslog messages to an external 
+server.
+*Syslog servers will listen for messages on ***UDP port 514.***
+
 
 Levels:
 Each syslog level has its own meaning:
 
-- Warning Level 4 - Emergency Level 0: These messages are error messages about software or hardware malfunctions; these types of messages mean that the functionality of the device is affected. The severity of the issue determines the actual syslog level applied.
-- Notification Level 5: This notifications level is for normal, but significant events. For example, interface up or down transitions, and system restart messages are displayed at the notifications level.
-- Informational Level 6: This is a normal information message that does not affect device functionality. For example, when a Cisco device is booting, you might see the following informational message: %LICENSE-6-EULA_ACCEPT_ALL: The Right to Use End User License Agreement is accepted.
-- Debugging Level 7: This level indicates that the messages are output generated from issuing various debug commands.
+| Level | Keyword       | Description                                  |
+|-------|---------------|----------------------------------------------|
+| 0     | Emergency     | System is unusable                           |
+| 1     | Alert         | Action must be taken immediately             |
+| 2     | Critical      | Critical conditions                          |
+| 3     | Error         | Error conditions                             |
+| 4     | Warning       | Warning conditions                           |
+| 5     | Notice        | Normal but significant condition (Notification) |
+| 6     | Informational | Informational messages                       |
+| 7     | Debugging     | Debug-level messages                         |
+
+***Every Awesome Cisco Engineer Will Need Ice cream Daily***
+
 
 Some common syslog message facility codes reported on Cisco IOS routers include:
 
@@ -213,7 +240,7 @@ For example, sample output on a Cisco switch for an EtherChannel link changing s
 
 %LINK-3-UPDOWN: Interface Port-channel1, changed state to up
 
-### COnfigure syslog timestamp
+### Configure syslog timestamp
 use the command service timestamps log datetime to force logged events to display the date and time. As shown in the command output, when the R1 GigabitEthernet 0/0/0 interface is reactivated, the log messages now contain the date and time.
 
 R1(config)# service timestamps log datetime
