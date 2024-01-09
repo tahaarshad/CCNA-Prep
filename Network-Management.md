@@ -1,6 +1,8 @@
 # 2.3 Configure and verify Layer 2 discovery protocols (Cisco Discovery Protocol and LLDP)
 # 4.2 Configure and verify NTP operating in a client and server mode
 
+# 4.5 Describe the use of syslog features including facilities and levels
+
 # Network Management
 ## Cisco Discovery Protocol
 Layer 2. Discover cisco devices, their names and type of interfaces. Send advertisements periodically.
@@ -102,7 +104,40 @@ Clock is synchronized, stratum 2, reference is 209.165.200.225
 S1(config)# end
 
 ### extra info
+A router has hardware clock and software clock. The hardware clock can be set using the calendar command: "calendar set 16:01:00 sept 25 2020".
+***synchronize clock and calendar***
+Use the command clock update-calendar to sync the calendar to the clock’s time.
+Use the command clock read-calendar to sync the clock to the calendar’s time.
 
+***set timezone:*** R2(config)#clock timezone JST 9
+
+***set Daylight Saving Time (Summer):*** R1(config)# clock summer-time recurring name start end [offset]
+
+can configure multiple ntp servers and use the ***"prefer" ***command at the end to specify preference.
+
+***update calendar after ntp config:*** R1(config)#ntp update-calendar
+
+***configure loopback address of router as source for other routers to sync:***
+R1(config)#interface loopback0
+R1(config-if)#ip address 10.1.1.1 255.255.255.255
+R1(config-if)#exit
+R1(config)#ntp source loopback0
+
+***configure device as ntp master:*** R1(config)#ntp master ?
+default stratum for ntp master is 8 so it should show as 7
+
+***configure peers:*** R2(config)#ntp peer 10.0.23.2 and "" 10.0.23.1 on other end.
+
+***NTP Authentication***
+ntp authenticate
+ntp authentication-key key-number md5 key
+ntp trusted-key key-number
+ntp server ip-address key key-number (not for the server but other devices)
+R2(config)#ntp authenticate
+R2(config)#ntp authentication-key 1 md5 jeremysitlab
+R2(config)#ntp trusted-key 1
+R2(config)#ntp server 10.0.12.1 key 1
+R2(config)#ntp peer 10.0.23.2 key 1
 
 ## Simple Network Management Protocol
 SNMP is an application layer protocol that provides a message format for communication between managers and agents. The SNMP system consists of three elements:
