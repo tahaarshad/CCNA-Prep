@@ -1,7 +1,34 @@
+# 6.0 Automation and Programmability
+***6.1 Explain how automation impacts network management
+6.2 Compare traditional networks with controller-based networking
+6.3 Describe controller-based, software defined architecture (overlay, underlay, and fabric)
+6.3.a Separation of control plane and data plane
+6.3.b Northbound and Southbound APIs
+6.4 Compare traditional campus device management with Cisco DNA Center enabled device 
+management
+6.5 Describe characteristics of REST-based APIs (CRUD, HTTP verbs, and data encoding)
+6.6 Recognize the capabilities of configuration management mechanisms Puppet, Chef, and 
+Ansible
+6.7 Recognize components of JSON-encoded data***
+
 # Network Automation
 any process that is self-driven, that reduces and potentially eliminates, the need for human intervention.
 
+- Traditional Network Management
+  - configured one-by-one, configured via console before deployed, distributed, manual labor, increased errors and failures
+- DNA Center based networking
+  - centrally managed and monitored using GUI and REST API, communicate intended network behvior to the DNA,  quicker deployments and receive configs without manual configuration.
+
+Networking tasks can be automated in traditional networks:
+→Scripts can be written (ie. using Python) to push commands to many devices at once.
+→Python with good use of Regular Expressions can parse through show commands to gather information 
+ about the network devices.
+
+
 ## Data Formats
+**Data serialization** is the process of converting data into a standardized format/structure that can be stored 
+(in a file) or transmitted (over a network) and reconstructed later (ie. by a different application)
+
 Hypertext Markup Language (HTML)
 JavaScript Object Notation (JSON)
 eXtensible Markup Language (XML)
@@ -37,23 +64,22 @@ XML Format
 ## JSON Syntax Rules
 These are some of the characteristics of JSON:
 
-It uses a hierarchical structure and contains nested values.
-It uses braces { } to hold objects and square brackets [ ] hold arrays.
-Its data is written as key/value pairs.
-In JSON, the data known as an object is one or more key/value pairs enclosed in braces { }. The syntax for a JSON object includes:
+- It uses a hierarchical structure and contains nested values.
+- It uses braces { } to hold objects and square brackets [ ] hold arrays.
+- Its data is written as key/value pairs.
+- In JSON, the data known as an object is one or more key/value pairs enclosed in braces { }. The syntax for a JSON object includes:
+  - Keys must be strings within double quotation marks " ".
+  - Values must be a valid JSON data type (string, number, array, Boolean, null, or another object).
+  - Keys and values are separated by a colon.
+  - Multiple key/value pairs within an object are separated by commas.
+  -  An object is an unordered list of key-value pairs (variables). Sometimes called a dictionary.
+- Whitespace is not significant.
+- At times a key may contain more than one value. This is known as an array. An array in JSON is an ordered list of values. Characteristics of arrays in JSON include:
+  - The key followed by a colon and a list of values enclosed in square brackets [ ].
+  - The array is an ordered list of values.
+  - The array can contain multiple value types including a string, number, Boolean, object or another array inside the array.
+  - Each value in the array is separated by a comma.
 
-Keys must be strings within double quotation marks " ".
-Values must be a valid JSON data type (string, number, array, Boolean, null, or another object).
-Keys and values are separated by a colon.
-Multiple key/value pairs within an object are separated by commas.
-Whitespace is not significant.
-At times a key may contain more than one value. This is known as an array. An array in JSON is an ordered list of values. Characteristics of arrays in JSON include:
-
-The key followed by a colon and a list of values enclosed in square brackets [ ].
-The array is an ordered list of values.
-The array can contain multiple value types including a string, number, Boolean, object or another array inside the array.
-Each value in the array is separated by a comma.
-For example, a list of IPv4 addresses might look like the following output. The key is “addresses”. Each item in the list is a separate object, separated by braces { }. The objects are two key/value pairs: an IPv4 address (“ip”) and a subnet mask (“netmask”) separated by a comma. The array of objects in the list is also separated by a comma following the closing brace for each object.
 
 
 ***the characteristic of YAML include:***
@@ -61,12 +87,14 @@ For example, a list of IPv4 addresses might look like the following output. The 
 It is like JSON and is considered a superset of JSON.
 It has a minimalist format making it easy to both read and write.
 It uses indentation to define its structure, without the use of brackets or commas.
+Whitespace is significant.
 
 ***characteristics of XML include:***
 
 It is like HTML , which is the standardized markup language for creating web pages and web applications.
 It is self-descriptive. It encloses data within a related set of tags: <-tag>data</-tag>
 Unlike HTML, XML uses no predefined tags or document structure.
+Whitespace is insignificant,
 
 
 ## API
@@ -111,6 +139,19 @@ Hostname - www.example.com
 Path and file name - /author/book.html
 Fragment - #page155
 
+Alternatively:
+https = scheme
+www.example.com = authority
+/author/book.html = path
+
+
+***HTTP Request***
+The first digit indicates the class of the response:
+→1xx informational – the request was received, continuing process
+→2xx successful – the request was successfully received, understood, and accepted
+→3xx redirection – further action needs to be taken in order to complete the request
+→4xx client error – the request contains bad syntax or cannot be fulfilled
+
 
 These are the different parts of the API request:
 
@@ -131,6 +172,10 @@ Parameters - Parameters are used to send information pertaining to the request. 
 
 
 ## COnfiguration Management Tools
+Configuration drift is when individual changes made over time cause a device’s configuration to 
+deviate from the standard/correct configurations as defined by the company.
+Configuration provisioning refers to how configuration changes are applied to devices.
+
 Simple Network Management Protocol (SNMP) was developed to allow administrators to manage nodes such as servers, workstations, routers, switches, and security appliances, on an IP network. Using a network management station (NMS), shown in the following figure, SNMP enables network administrators to monitor and manage network performance, find and solve network problems, and perform queries for statistics. SNMP works reasonably well for device monitoring. However, it is not typically used for configuration due to security concerns and difficulty in implementation. Although SNMP is widely available, it cannot serve as an automation tool for today’s networks.
 
 You can also use APIs to automate the deployment and management of network resources. Instead of the network administrator manually configuring ports, access lists, quality of service (QoS), and load balancing policies, they can use tools to automate configurations. These tools hook into network APIs to automate routine network provisioning tasks, enabling the administrator to select and deploy the network services they need. This can significantly reduce many repetitive and mundane tasks to free up time for network administrators to work on more important things.
@@ -164,6 +209,9 @@ Agent-based or agentless? - Configuration management is either agent-based or ag
 How are devices managed? - This lies with a device called the Master in Puppet, Chef, and SaltStack. However, because Ansible is agentless, any computer can be the controller.
 What is created by the tool? - Network administrators use configuration management tools to create a set of instructions to be executed. Each tool has its own name for these instructions: Playbook, Cookbook, Manifest, and Pillar. Common to each of this is specification of a policy or a configuration that is to be applied to devices. Each device type might have its own policy. For example, all Linux servers might get the same basic configuration and security policy
 
+
+
+
 ## IBN and Cisco DNA
 Intent-Based Networking (IBN) and Cisco Digital Network Architecture (DNA) Center can help you bring it all together to create an automated network.
 
@@ -180,6 +228,32 @@ The figure shows Intent-based networks (IBN) three essential functions and how t
 ### Network Infrastructure as Fabric
 From the perspective of IBN, the physical and virtual network infrastructure is a fabric. Fabric is a term used to describe an overlay that represents the logical topology used to virtually connect to devices, as shown in the figure. The overlay limits the number of devices the network administrator must program. It also provides services and alternative forwarding methods not controlled by the underlying physical devices. For example, the overlay is where encapsulation protocols like IP security (IPsec) and Control and Provisioning of Wireless Access Points (CAPWAP) occur. Using an IBN solution, the network administrator can specify through policies exactly what happens in the overlay control plane. Notice that how the switches are physically connected is not a concern of the overlay.
 The underlay network is the physical topology that includes all hardware required to meet business objectives. The underlay reveals additional devices and specifies how these devices are connected, as shown in the figure. End points, such as the servers in the figure, access the network through the Layer 2 devices. The underlay control plane is responsible for simple forwarding tasks.
+
+The underlay’s purpose is to support the VXLAN tunnels of the overlay.
+● There are three different roles for switches in SD-Access:
+→Edge nodes: Connect to end hosts
+→Border nodes: Connect to devices outside of the SD-Access domain, ie. WAN routers.
+→Control nodes: Use LISP (Locator ID Separation Protocol) to perform various control plane 
+ functions.
+● You can add SD-Access on top of an existing network (brownfield deployment) if your network hardware 
+and software supports it.
+→Google ‘Cisco SD-Access compatibility matrix’ if you’re curious.
+→In this case DNA Center won’t configure the underlay.
+● A new deployment (greenfield deployment) will be configured by DNA Center to use the optimal SD-Access 
+underlay:
+→All switches are Layer 3 and use IS-IS as their routing protocol.
+→All links between switches are routed ports. This means STP is not needed.
+→Edge nodes (access switches) act as the default gateway of end hosts (routed access layer)
+
+Overlay:
+LISP provides the control plane of SD-Access.
+→A list of mappings of EIDs (endpoint identifiers) to RLOCs (routing locators) is kept.
+→EIDs identify end hosts connected to edge switches, and RLOCs identify the edge switch which can be 
+used to reach the end host.
+→There is a LOT more detail to cover about LISP, but I think you can see how it differs from the traditional 
+control plane.
+● Cisco TrustSec (CTS) provides policy control (QoS, security policy, etc).
+● VXLAN provides the data plane of SD-Access
 
 ### Cisco Digital Network Architecture (DNA)
 Cisco implements the IBN fabric using Cisco DNA. As displayed in the figure, the business intent is securely deployed into the network infrastructure (the fabric). Cisco DNA then continuously gathers data from a multitude of sources (devices and applications) to provide a rich context of information. This information can then be analyzed to make sure the network is performing securely at its optimal level and in accordance with business intent and network policies.

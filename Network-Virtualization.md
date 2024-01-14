@@ -32,21 +32,32 @@ Type 1 hypervisors require a “management console” to manage the hypervisor. 
 Network functions can be virtualized. Each network device can be segmented into multiple virtual devices that operate as independent devices. Examples include subinterfaces, virtual interfaces, VLANs, and routing tables. Virtualized routing is called virtual routing and forwarding (VRF).
 
 ### Software Defined Networking
-Terms: Network Programming, SDN, Controllers
+- **Control Plane**: the brains of a device. It is used to make forwarding decisions. The control plane contains Layer 2 and Layer 3 route forwarding mechanisms, such as routing protocol neighbor tables and topology tables, IPv4 and IPv6 routing tables, STP, and the ARP table. Information sent to the control plane is processed by the CPU.
+The control plane performs overhead work: 
+→ OSPF itself doesn’t forward user data packets, but it informs the data plane about how 
+packets should be forwarded.
+→ STP itself isn’t directly involved in the process of forwarding frames, but it informs the data 
+plane about which interfaces should and shouldn’t be used to forward frames.
+→ ARP messages aren’t user data, but they are used to build an ARP table which is used in 
+the process of forwarding data.
 
-- Control Plane: the brains of a device. It is used to make forwarding decisions. The control plane contains Layer 2 and Layer 3 route forwarding mechanisms, such as routing protocol neighbor tables and topology tables, IPv4 and IPv6 routing tables, STP, and the ARP table. Information sent to the control plane is processed by the CPU.
-- Data Plane: Also called the forwarding plane, this plane is typically the switch fabric connecting the various network ports on a device. The data plane of each device is used to forward traffic flows. 
+- **Data Plane**: Also called the **forwarding plane**, this plane is typically the switch fabric connecting the various network ports on a device. The data plane of each device is used to forward traffic flows. 
+NAT (changing the src/dst addresses before forwarding) is part of the data plane.
+Deciding to forward or discard messages due to ACLs, port security, etc. is part of the data 
+plane.
+
+- **Management Plane**: Is responsible for managing a device through its connection to the network. Network administrators use applications such as Secure Shell (SSH), Trivial File Transfer Protocol (TFTP), Secure FTP, and Secure Hypertext Transfer Protocol (HTTPS) to access the management plane and configure a device.
 
 ***Cisco Express FOrwardind***
 CEF is an advanced, Layer 3 IP switching technology that enables forwarding of packets to occur at the data plane without consulting the control plane. In CEF, the control plane’s routing table pre-populates the CEF Forwarding Information Base (FIB) table in the data plane. The control plane’s ARP table pre-populates the adjacency table. Packets are then forwarded directly by the data plane based on the information contained in the FIB and adjacency table, without needing to consult the information in the control plane.
 
-***Management Plane***
-Is responsible for managing a device through its connection to the network. Network administrators use applications such as Secure Shell (SSH), Trivial File Transfer Protocol (TFTP), Secure FTP, and Secure Hypertext Transfer Protocol (HTTPS) to access the management plane and configure a device.
+
 
 ### Technologies
 ***Architectures***
-- Software-Defined Networking (SDN) - A network architecture that virtualizes the network, offering a new approach to network administration and management that seeks to simplify and streamline the administration process.
-- Cisco Application Centric Infrastructure (ACI) - A purpose-built hardware solution for integrating cloud computing and data center management.
+- **Software-Defined Networking (SDN)** - A network architecture that virtualizes the network, offering a new approach to network administration and management that seeks to simplify and streamline the administration process. **Centralizes** the control plane 
+into an application called a **controller**.
+- **Cisco Application Centric Infrastructure (ACI)** - A purpose-built hardware solution for integrating cloud computing and data center management.
 
 Components of SDN:
 
@@ -55,10 +66,29 @@ Components of SDN:
 - Other components - Other components include Interface to the Routing System (I2RS), Transparent Interconnection of Lots of Links (TRILL), Cisco FabricPath (FP), and IEEE 802.1aq Shortest Path Bridging (SPB).
 
 
-***Note*** a traditional router or switch architecture, the control plane and data plane functions occur in the same device. Routing decisions and packet forwarding are the responsibility of the device operating system. In SDN, management of the control plane is moved to a centralized SDN controller.
-The SDN controller uses northbound APIs to communicate with the upstream applications. These APIs help network administrators shape traffic and deploy services. The SDN controller also uses southbound APIs to define the behavior of the data planes on downstream switches and routers. OpenFlow is the original and widely implemented southbound API.
 
-The figure illustrates the complete SDN framework. The figure has three sections: the application layer, control plane and data plane. At the application layer, there are business applications, cloud orchestration, and SDN applications. At the control plane, there is the SDN controller. The SDN controller is providing routing, traffic engineering and mobility. Between the application layer and the control are arrows indicating the Northbound APIs used to communicate between the SDN and applications. The data plane has a hub and spoke topology of eight routers and switches. Between the control plane and the data plane is an arrow indicating the Southbound APIs used between the SDN and the routers and switches.
+
+The SDN controller uses **northbound APIs** to communicate with the upstream applications such as the controller using REST API. These APIs help network administrators shape traffic and deploy services. 
+The SDN controller also uses **southbound APIs** to communications between the controller and the network devices it controls. OpenFlow is the original and widely implemented southbound API.
+
+***SDN Architecture***
+Application Layer:
+Contains scripts/applications that tell the SDN 
+controller what network behaviors are desired.
+Control Layer:
+Contains the SDN controller that receives and 
+processes instructions from the application 
+layer.
+Infrastructure Layer:
+Contains the network devices that are 
+responsible for forwarding messages across 
+the network
+
+***SD-Access***
+● Cisco SD-Access is Cisco’s SDN solution for automating campus LANs.
+→ACI (Application Centric Infrastructure) is their SDN solution for automating data center networks.
+→SD-WAN is their SDN solution for automating WANs.
+● Cisco DNA (Digital Network Architecture) Center is the controller at the center of SD-Access.
 
 ## SDN Controllers
 The SDN controller defines the data flows between the centralized control plane and the data planes on individual routers and switches.
@@ -115,3 +145,4 @@ Services
 
 
 CEF uses the FIB and adjacency table to make fast forwarding decisions without control plane processing. The adjacency table is pre-populated by the ARP table and the FIB is pre-populated by the routing table.​
+
