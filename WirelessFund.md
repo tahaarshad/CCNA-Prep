@@ -29,4 +29,68 @@ frequency.
 → Hz (Hertz) = cycles per second
 → kHz (Kilohertz) = 1,000 cycles per second
 - Another important term is period, the amount of time of one cycle.
-→ If the frequency is 4 Hz, the period is 0.25 seconds.`
+→ If the frequency is 4 Hz, the period is 0.25 seconds.
+
+### Range
+- The visible frequency range is about 400 THz to 790 THz.
+- The radio frequency range is from 30 Hz to 300 GHz and is used for many purposes
+
+## Wi-Fi
+Two Bands:
+2.4 GHz: 2.400 GHz to 2.4835 GHz
+5 GHz: 5.150 GHz to 5.825 GHz
+
+2.4 provides further reach but more interference cause of large quantity of devices.
+
+Wifi 6 (802.11ax) introduced 6 GHz band
+
+
+### Channels
+Bands are further divided into channels. Devices are configure to transmit and receive from one or more channels.
+
+Small Wireless LAN with Single AP, use any channel.
+
+Larger WLANs with multiple AP's, use non overlapping channels.
+For 2.4 GHz, use channels 1,6,11
+5 GHz has non-overlapping channels.
+
+Channels 1,6,11 can be arranged in honeycomb pattern.
+1-6/11 or 1-5/9-13
+
+## Service Set
+802.11 defines different kinds of service sets which are groups of 
+wireless network devices.
+- There are three main types:
+→ Independent
+→ Infrastructure
+→ Mesh
+- All devices in a service set share the same SSID (service set 
+identifier).
+- Does not have to be unique
+
+IBSS
+Independant Basic Service Set.
+two or more wireless devices connected without AP.
+Ad hoc network.
+
+BSS
+Connected via AP only not direct.
+BSSID used to identify the AP.
+Can have same SSID but not BSSID.
+BSSID is usually the MAC Address
+
+Signal Area is called BSA Basic Service Area
+Devices in BSS are called clients or stations.
+
+
+ESS
+Extended Service Set.
+Multiple BSS connected using Wired Network.
+→ Each BSS uses the same SSID.
+→ Each BSS has a unique BSSID.
+→ Each BSS uses a different channel to avoid interference.
+Clients can pass between APs without having to reconnect, 
+providing a seamless Wi-Fi experience when moving 
+between APs.
+→ This is called roaming.
+● The BSAs should overlap about 10-15%.
