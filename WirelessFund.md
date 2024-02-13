@@ -94,3 +94,15 @@ providing a seamless Wi-Fi experience when moving
 between APs.
 → This is called roaming.
 ● The BSAs should overlap about 10-15%.
+
+MBSS
+Mesh Basic Service Set
+Root Access Point connected to Wired Network.
+Mesh Access Points connected to each other and the RAP.
+Mesh AP use 2 radios. One to transmit and one to form a backhaul networ for bridging traffic between AP's.
+A protocol is used to determine the best path through the mesh.
+
+Distribution System
+Most Wireless networks are connected to a wired network.
+The wired network is know as the Distribution system.
+Each Wireless BSS or ESS is mapped to a VLAN in the wired network.
