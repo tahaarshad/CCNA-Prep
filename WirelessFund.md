@@ -68,12 +68,12 @@ wireless network devices.
 identifier).
 - Does not have to be unique
 
-IBSS
+**IBSS**
 Independant Basic Service Set.
 two or more wireless devices connected without AP.
 Ad hoc network.
 
-BSS
+**BSS**
 Connected via AP only not direct.
 BSSID used to identify the AP.
 Can have same SSID but not BSSID.
@@ -83,7 +83,7 @@ Signal Area is called BSA Basic Service Area
 Devices in BSS are called clients or stations.
 
 
-ESS
+**ESS**
 Extended Service Set.
 Multiple BSS connected using Wired Network.
 → Each BSS uses the same SSID.
@@ -95,14 +95,27 @@ between APs.
 → This is called roaming.
 ● The BSAs should overlap about 10-15%.
 
-MBSS
+**MBSS**
 Mesh Basic Service Set
 Root Access Point connected to Wired Network.
 Mesh Access Points connected to each other and the RAP.
 Mesh AP use 2 radios. One to transmit and one to form a backhaul networ for bridging traffic between AP's.
 A protocol is used to determine the best path through the mesh.
 
-Distribution System
+**Distribution System**
 Most Wireless networks are connected to a wired network.
 The wired network is know as the Distribution system.
 Each Wireless BSS or ESS is mapped to a VLAN in the wired network.
+
+Possible for AP to provide multiple WLANS with unique SSID.
+Each WLAN is mapped to difference VLAN and connected to wired network via Trunk.
+Each WLAN uses unique BSSID by incrementing the last digit of BSSID by one.
+
+## Additional AP Operational Modes
+- AP can have repeater mode to extend the range of BSS.
+It retransmits signals. If the repeater has one radio, then it can operate on the same channel as the AP. If it has two radios, then one channel to receive and one channel to transmit.
+
+- AP can act as a workgroup bridge that connects wired devices to the wireless network.
+Two kinds of WGB. Universal WGB is 802.11 standard whereas WGB is Cisco Proprietory.
+
+- APs with specialized antennas can send signal over longer distances making them an outdoor bridge. It can be point to point or point to multipoint connection.
